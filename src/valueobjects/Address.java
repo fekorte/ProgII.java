@@ -1,6 +1,6 @@
 package valueobjects;
 
-public class iAddress {
+public class Address {
     protected String street;
     protected int number;
 

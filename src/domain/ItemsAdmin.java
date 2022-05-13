@@ -1,4 +1,4 @@
-package ui.cui;
+package domain;
 
 import domain.Stock;
 

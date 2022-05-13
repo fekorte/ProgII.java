@@ -19,14 +19,12 @@ public class LogIn {
     }
 
     private String readInput() throws IOException {
-        // einlesen von Konsole
         return in.readLine();
     }
 
     private void processInput(String line) throws IOException {
         String userName;
         String password;
-        List<> liste;
 
 
         switch (line) {

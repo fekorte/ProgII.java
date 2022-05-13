@@ -1,12 +1,14 @@
 package valueobjects;
 
-public class Client extends Person{
+public class Client extends Person {
     private Address address;
 
-    public Client(String name, int idNumber, Address address){
+    public Client(String name, int idNumber, Address address) {
         super(name, idNumber);
-        this.address = address;
+        this.address=address;
+
     }
+}
     /*
     putItemsInCart();
 
@@ -15,5 +17,5 @@ public class Client extends Person{
     emptyCart();
 
     buy();
-     /*
-}
+     */
+

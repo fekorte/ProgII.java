@@ -1,5 +1,8 @@
 package domain;
 
+import valueobjects.Client;
+import valueobjects.Item;
+
 public class ShopCart {
     private Client client;
     private int date;
@@ -10,11 +13,11 @@ public class ShopCart {
         this.date = date;
         this.item = item;
     }
-    putItemsInCart();
-
-    changeNumberItemsInCart();
-
-    emptyCart();
-
-    buy();
+    // putItemsInCart();
+    //
+    // changeNumberItemsInCart();
+    //
+    // emptyCart();
+    //
+    // buy();
 }

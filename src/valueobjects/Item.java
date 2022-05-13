@@ -12,7 +12,7 @@ public class Item {
         this.itemCode = itemCode;
         this.stock = stock;
     }
-    public static void setStock(int stockIncrease){
+    public void setStock(int stockIncrease){
        this.stock = stock;
     }
 }

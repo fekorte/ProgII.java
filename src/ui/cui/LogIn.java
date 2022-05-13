@@ -1,20 +1,28 @@
 package ui.cui;
 
+import valueobjects.Person;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class LogIn {
     private BufferedReader in;
+    private Person user;
 
-    public static void main(String[] args) {
-        private void showMenue() {
+    public LogIn(String datei) throws IOException {
+        user = new Person(datei);
+        in = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+        private static void showMenue() {
             System.out.print("Commands: \n  Login:  'l'");
             System.out.print("         \n  Register:  'r'");
             System.out.print("         \n  ---------------------");
             System.out.println("         \n  Beenden:        'q'");
-            System.out.print("> "); // Prompt
-            System.out.flush(); // ohne NL ausgeben
+            System.out.print("> ");
+            System.out.flush();
         }
     }
 
@@ -37,6 +45,31 @@ public class LogIn {
             case "r":
 
                 break;
+        }
+    }
+    public void run() {
+        String input = "";
+
+        do {
+            showMenue();
+            try {
+                input = readInput();
+                processInput(input);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } while (!input.equals("q"));
+    }
+
+    public static void main(String[] args) {
+        LogIn cui;
+        try {
+            cui = new LogIn("User");
+            cui.run();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

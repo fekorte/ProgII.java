@@ -30,7 +30,7 @@ public class Stock {
 
     //Incorrect method, needs to include arrayList
    public void addItemToStock(int numberOfItems){
-        Item.setStock(numberOfItems);
+    //    Item.setStock(numberOfItems);
    }
    public void removeItemFromStock(Item item){
         stock.remove(item);

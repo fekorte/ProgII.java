@@ -35,6 +35,7 @@ public class Stock {
    public void removeItemFromStock(Item item){
         stock.remove(item);
    }
+
    public List<Item> getStockContent() {
        return new ArrayList<Item>(stock);
    }

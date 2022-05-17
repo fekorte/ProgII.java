@@ -1,6 +1,7 @@
 package ui.cui;
 
 import domain.EShopManager;
+import valueobjects.Item;
 import valueobjects.Person;
 
 import java.io.BufferedReader;
@@ -17,15 +18,39 @@ class UI {
         in = new BufferedReader(new InputStreamReader(System.in));
     }
 
-        private void showMenue() {
+    private void showMenu() {
             System.out.print("Commands: \n  Login:  'l'");
             System.out.print("         \n  Register:  'r'");
             System.out.print("         \n  ---------------------");
-            System.out.println("         \n  Beenden:        'q'");
+            System.out.println("         \n  Exit:        'q'");
             System.out.print("> ");
             System.out.flush();
-        }
+    }
+    private void showClientMenu() {
+        System.out.print("Commands: \n  Show items (a-z): 'i' ");
+        //System.out.print("         \n Show items (item number) : 'n' ");
+        System.out.print("         \n Select items: 's' ");
+        System.out.print("         \n Change shopping cart: 'c' ");
+        System.out.print("         \n Empty shopping cart: 'e' ");
+        System.out.print("         \n Buy selected items: 'b' ");
+        System.out.print("         \n  ---------------------");
+        System.out.println("         \n  Exit:        'q'");
+        System.out.print("> ");
+        System.out.flush();
+    }
 
+    private void showEmployeeMenu() {
+        System.out.print("Commands: \n  Show items (a-z): 'i' ");
+        System.out.print("         \n Show items (item number) : 'n' ");
+        System.out.print("         \n Add new item: 'a' ");
+        System.out.print("         \n Increase stock: 'k' ");
+        System.out.print("         \n Register new employee: 'y' ");
+        System.out.print("         \n Show stock list: 'x' ");
+        System.out.print("         \n  ---------------------");
+        System.out.println("         \n  Exit:        'q'");
+        System.out.print("> ");
+        System.out.flush();
+    }
 
     private String readInput() throws IOException {
         return in.readLine();
@@ -34,7 +59,8 @@ class UI {
     private void processInput(String line) throws IOException {
         String userName;
         String password;
-
+        String address;
+        List<Item> list;
 
         switch (line) {
             case "l":
@@ -42,10 +68,36 @@ class UI {
                 userName = readInput();
                 System.out.print("Password > ");
                 password = readInput();
-                manager.login(userName, password)
+                manager.login(userName, password);
                 break;
             case "r":
-
+                System.out.print("Username > ");
+                userName = readInput();
+                System.out.print("Password > ");
+                password = readInput();
+                System.out.print("Address > ");
+                address = readInput();
+                manager.registerClient(userName, password, address);
+                break;
+            case "i":
+                break;
+            case "n":
+                break;
+            case "s":
+                break;
+            case "c":
+                break;
+            case "e":
+                break;
+            case "b":
+                break;
+            case "a":
+                break;
+            case "k":
+                break;
+            case "y":
+                break;
+            case "x":
                 break;
         }
     }
@@ -53,7 +105,7 @@ class UI {
         String input = "";
 
         do {
-            showMenue();
+            showMenu();
             try {
                 input = readInput();
                 processInput(input);

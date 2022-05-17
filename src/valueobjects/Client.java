@@ -1,10 +1,10 @@
 package valueobjects;
 
 public class Client extends Person {
-    private Address address;
+    private String address;
 
-    public Client(String name, int idNumber, Address address) {
-        super(name, idNumber);
+    public Client(String name, String address) {
+        super(name);
         this.address=address;
 
     }

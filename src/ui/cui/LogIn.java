@@ -19,13 +19,14 @@ class UI {
     }
 
     private void showMenu() {
-            System.out.print("Commands: \n  Login:  'l'");
-            System.out.print("         \n  Register:  'r'");
-            System.out.print("         \n  ---------------------");
-            System.out.println("         \n  Exit:        'q'");
-            System.out.print("> ");
-            System.out.flush();
+        System.out.print("Commands: \n  Login:  'l'");
+        System.out.print("         \n  Register:  'r'");
+        System.out.print("         \n  ---------------------");
+        System.out.println("         \n  Exit:        'q'");
+        System.out.print("> ");
+        System.out.flush();
     }
+
     private void showClientMenu() {
         System.out.print("Commands: \n  Show items (a-z): 'i' ");
         //System.out.print("         \n Show items (item number) : 'n' ");
@@ -69,6 +70,17 @@ class UI {
                 System.out.print("Password > ");
                 password = readInput();
                 manager.login(userName, password);
+                if (manager.login(userName, password)) {
+                    System.out.println("Login successful");
+                    manager.selectMenu(userName);
+                    if(manager.selectMenu(userName)){
+                        showClientMenu();
+                    } else {
+                        showEmployeeMenu();
+                    }
+                } else {
+                    System.out.println("Login failed");
+                }
                 break;
             case "r":
                 System.out.print("Username > ");
@@ -80,27 +92,34 @@ class UI {
                 manager.registerClient(userName, password, address);
                 break;
             case "i":
-                break;
+            break;
             case "n":
-                break;
+            break;
             case "s":
-                break;
+            break;
             case "c":
-                break;
+            break;
             case "e":
-                break;
+            break;
             case "b":
-                break;
+            break;
             case "a":
-                break;
+            break;
             case "k":
-                break;
+            break;
             case "y":
+                System.out.print("Username > ");
+                userName = readInput();
+                System.out.print("Password > ");
+                password = readInput();
+                manager.registerEmployee(userName, password);
                 break;
-            case "x":
-                break;
-        }
+         case "x":
+        break;
     }
+
+}
+
     public void run() {
         String input = "";
 
@@ -119,5 +138,10 @@ class UI {
     public static void main(String[] args) throws IOException {
         UI cui = new UI();
         cui.run();
-    }
+
+
+        }
+
 }
+
+

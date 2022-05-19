@@ -15,4 +15,6 @@ public class Person {
 
     logIn();
     */
+    public String getName(){return name;}
+    public int getIdNumber(){return idNumber;}
     

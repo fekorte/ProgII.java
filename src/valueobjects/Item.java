@@ -16,3 +16,8 @@ public class Item {
        this.stock = stock;
     }
 }
+
+    public String toString() {
+        String availability  = stock ? "available" : "sold out"; //this is to know if we have this item in stock
+        return ("Item Name " + itemName +  " / Item code: " + itemCode  " / Availability: " + availability );
+    }

@@ -12,30 +12,41 @@ public class Item {
         this.itemCode = itemCode;
         this.stock = stock;
     }
-    public void setStock(int stockIncrease){
-       this.stock = stock;
+
+    public void setStock(int stockIncrease) {
+        this.stock = stock;
     }
-}
 
     public String toString() {
-        String availability  = stock ? "available" : "sold out"; //this is to know if we have this item in stock
-        return ("Item Name " + itemName +  " / Item code: " + itemCode  " / Availability: " + availability );
+        String availability = (stock > 0) ? "available" : "sold out"; //this is to know if we have this item in stock
+        return ("Item Name " + itemName + " / Item code: " + itemCode + " / Availability: " + availability);
     }
 
-/** Do we need to cheack if the items are repeated???? in our case it could not be importan
- * public boolean equals(Object anderesBuch) {
- * 		if (anderesBuch instanceof Buch)
- * 			return ((this.nummer == ((Buch) anderesBuch).nummer)
- * 					&& (this.titel.equals(((Buch) anderesBuch).titel)));
- * 		else
- * 			return false;
- *        }
- */
+    /**
+     * Do we need to cheack if the items are repeated???? in our case it could not be importan
+     * public boolean equals(Object anderesBuch) {
+     * if (anderesBuch instanceof Buch)
+     * return ((this.nummer == ((Buch) anderesBuch).nummer)
+     * && (this.titel.equals(((Buch) anderesBuch).titel)));
+     * else
+     * return false;
+     * }
+     */
     //methods to acces the information of the items
-    public String getItemName(){return itemName;}
-    public float getPrice(){return price;}
+    public String getItemName() {
+        return itemName;
+    }
 
-    public int getItemCode(){ return itemCode;}
+    public float getPrice() {
+        return price;
+    }
 
-    public int getStock(){return stock;}
+    public int getItemCode() {
+        return itemCode;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+}
 

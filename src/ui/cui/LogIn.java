@@ -69,7 +69,6 @@ class UI {
                 userName = readInput();
                 System.out.print("Password > ");
                 password = readInput();
-                manager.login(userName, password);
                 if (manager.login(userName, password)) {
                     System.out.println("Login successful");
                     manager.selectMenu(userName);

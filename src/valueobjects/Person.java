@@ -9,11 +9,17 @@ public class Person {
         this.name = name;
         this.idNumber = count++;
     }
-}
+
     /*
     registerAsClient();
 
     logIn();
     */
-    public String getName(){return name;}
-    public int getIdNumber(){return idNumber;}
+    public String getName() {
+        return name;
+    }
+
+    public int getIdNumber() {
+        return idNumber;
+    }
+}

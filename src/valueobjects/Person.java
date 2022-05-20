@@ -15,11 +15,11 @@ public class Person {
 
     logIn();
     */
-    public String getName() {
+
+    public String getName(){
         return name;
     }
-
-    public int getIdNumber() {
+    public int getIdNumber(){
         return idNumber;
     }
 }

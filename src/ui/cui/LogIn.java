@@ -60,6 +60,8 @@ class UI {
         return in.readLine();
     }
 
+    boolean loggedin;
+
     private void processInput(String line) throws IOException {
         String userName;
         String password;
@@ -74,13 +76,10 @@ class UI {
                 password = readInput();
                 if (manager.login(userName, password)) {
                     System.out.println("Login successful");
-                    if(manager.selectMenu(userName)){
-                        showClientMenu();
-                    } else {
-                        showEmployeeMenu();
-                    }
+                    loggedin = true;
                 } else {
                     System.out.println("Login failed");
+                    loggedin = false;
                 }
                 break;
 
@@ -145,9 +144,17 @@ class UI {
 
     public void run() {
         String input = "";
-
         do {
             showMenu();
+            if(loggedin) {
+                if (manager.selectMenu(userName)) {
+                    showClientMenu();
+                } else {
+                    showEmployeeMenu();
+                }
+            } else {
+                showMenu();
+            }
             try {
                 input = readInput();
                 processInput(input);

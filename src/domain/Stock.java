@@ -23,6 +23,8 @@ public class Stock {
         this.stock = stock;
     }
 
+
+
     /*
         private int date;
         private int numberItems;

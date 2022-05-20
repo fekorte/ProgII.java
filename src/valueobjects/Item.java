@@ -4,27 +4,31 @@ public class Item {
     private String itemName;
     private float price;
     private int itemCode;
-    private int stock;
+    private int numberInStock;
 
-    public Item(String itemName, float price, int itemCode, int stock) {
+    public Item(String itemName, float price, int itemCode, int numberInStock) {
         this.itemName = itemName;
         this.price = price;
         this.itemCode = itemCode;
-        this.stock = stock;
+        this.numberInStock = numberInStock;
     }
 
 
     public void addItem(int stockIncrease){
-       this.stock = stock + stockIncrease;
+       this.numberInStock = numberInStock + stockIncrease;
     }
 
     public void removeItem(int stockDecrease){
-        this.stock= stock - stockDecrease;
+        this.numberInStock = numberInStock - stockDecrease;//in case you want to sell an item we decrease it in the number of objects we bought=stockDecrease
+    }
+
+    public void addToStock(int numberNewItem){
+        this.numberInStock = numberInStock + numberNewItem;
     }
 
 
     public String toString() {
-        String availability  = (stock > 0) ? "available" : "sold out"; //this is to know if we have this item in stock
+        String availability  = (numberInStock > 0) ? "available" : "sold out"; //this is to know if we have this item in stock
         return ("Item Name " + itemName +  " / Item code: " + itemCode+ " / Availability: " + availability );
     }
 
@@ -45,7 +49,7 @@ public class Item {
 
     public int getItemCode(){ return itemCode;}
 
-    public int getStock() {return stock;}
+    public int getNumberInStock() {return numberInStock;}
 }
 
 

@@ -17,11 +17,11 @@ public class Item {
     public void setStock(int stockIncrease){
        this.stock = stock;
     }
-}
+
 
     public String toString() {
-        String availability  = stock  ? "available" : "sold out"; //this is to know if we have this item in stock
-        return ("Item Name " + itemName +  " / Item code: " + itemCode  " / Availability: " + availability );
+        String availability  = (stock > 0) ? "available" : "sold out"; //this is to know if we have this item in stock
+        return ("Item Name " + itemName +  " / Item code: " + itemCode+ " / Availability: " + availability );
     }
 
 /** Do we need to cheack if the items are repeated???? in our case it could not be importan

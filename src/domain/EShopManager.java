@@ -10,13 +10,18 @@ import java.util.Map;
 
 
 public class EShopManager {
-    private Map<String, String> personList = new HashMap<>();
+    private Map<String, String> personMap = new HashMap<>();
     private Map<String, Client> clientList = new HashMap<>();
 
     private Map<String, Employee> employeeList = new HashMap<>();
 
+    public EShopManager(){
+        registerClient("Peter", "234","pappel");
+        registerEmployee("Hans", "abc");
+    }
+
     public boolean login(String userName, String password) {
-        if (personList.containsKey(password) && personList.containsValue(userName)) {
+        if (personMap.containsKey(password) && personMap.containsValue(userName)) {
             return true;
         } else {
             return false;
@@ -25,13 +30,13 @@ public class EShopManager {
 
     public void registerClient(String userName, String password, String address) {
         Client client = new Client(userName, address);
-        personList.putIfAbsent(password, userName);
+        personMap.putIfAbsent(password, userName);
         clientList.putIfAbsent(userName, client);
     }
 
     public void registerEmployee(String userName, String password) {
         Employee employee = new Employee(userName);
-        personList.putIfAbsent(password, userName);
+        personMap.putIfAbsent(password, userName);
         employeeList.putIfAbsent(userName, employee);
     }
 

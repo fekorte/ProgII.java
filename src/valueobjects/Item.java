@@ -4,14 +4,15 @@ public class Item {
     private String itemName;
     private float price;
     private int itemCode;
-    private boolean stock;
+    private int stock;
 
     public Item(String itemName, float price, int itemCode, int stock) {
         this.itemName = itemName;
         this.price = price;
         this.itemCode = itemCode;
-        this.stock = 0< stock;
+        this.stock = stock;
     }
+
 
     public void setStock(int stockIncrease){
        this.stock = stock;
@@ -19,7 +20,7 @@ public class Item {
 }
 
     public String toString() {
-        String availability  = stock ? "available" : "sold out"; //this is to know if we have this item in stock
+        String availability  = stock  ? "available" : "sold out"; //this is to know if we have this item in stock
         return ("Item Name " + itemName +  " / Item code: " + itemCode  " / Availability: " + availability );
     }
 
@@ -33,10 +34,15 @@ public class Item {
  *        }
  */
     //methods to acces the information of the items
-    public String getItemName(){return itemName;}
+    public String getItemName(){
+        return itemName;
+    }
     public float getPrice(){return price;}
 
     public int getItemCode(){ return itemCode;}
 
     public int getStock() {return stock;}
 }
+
+
+

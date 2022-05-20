@@ -15,6 +15,7 @@ public class Person {
 
     logIn();
     */
+
     public String getName(){
         return name;
     }

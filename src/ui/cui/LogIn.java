@@ -71,7 +71,6 @@ class UI {
                 password = readInput();
                 if (manager.login(userName, password)) {
                     System.out.println("Login successful");
-                    manager.selectMenu(userName);
                     if(manager.selectMenu(userName)){
                         showClientMenu();
                     } else {
@@ -81,6 +80,7 @@ class UI {
                     System.out.println("Login failed");
                 }
                 break;
+
             case "r":
                 System.out.print("Username > ");
                 userName = readInput();
@@ -122,6 +122,8 @@ class UI {
                 break;
          case "x":
         break;
+            default:
+                break;
     }
 
 }

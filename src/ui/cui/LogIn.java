@@ -15,6 +15,8 @@ import java.util.List;
 class UI {
     private BufferedReader in;
     private Person user;
+    boolean loggedin;
+    boolean itsAClient;
     private EShopManager manager = new EShopManager();
 
     public UI() throws IOException {
@@ -60,8 +62,6 @@ class UI {
         return in.readLine();
     }
 
-    boolean loggedin;
-
     private void processInput(String line) throws IOException {
         String userName;
         String password;
@@ -77,6 +77,11 @@ class UI {
                 if (manager.login(userName, password)) {
                     System.out.println("Login successful");
                     loggedin = true;
+                    if (manager.selectMenu(userName)) {
+                        itsAClient = true;
+                    } else {
+                        itsAClient = false;
+                    }
                 } else {
                     System.out.println("Login failed");
                     loggedin = false;
@@ -145,9 +150,8 @@ class UI {
     public void run() {
         String input = "";
         do {
-            showMenu();
-            if(loggedin) {
-                if (manager.selectMenu(userName)) {
+            if(loggedin){
+                if(itsAClient){
                     showClientMenu();
                 } else {
                     showEmployeeMenu();
@@ -155,6 +159,7 @@ class UI {
             } else {
                 showMenu();
             }
+
             try {
                 input = readInput();
                 processInput(input);

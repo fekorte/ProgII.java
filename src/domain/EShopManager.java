@@ -4,8 +4,10 @@ package domain;
 
 import valueobjects.Client;
 import valueobjects.Employee;
+import valueobjects.Item;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -15,10 +17,18 @@ public class EShopManager {
 
     private Map<String, Employee> employeeList = new HashMap<>();
 
+    private Stock stock = new Stock();
+
+    public List<Item> getItems(){
+        return stock.getStock();
+    }
+
+
     public EShopManager(){
         registerClient("Peter", "234","pappel");
         registerEmployee("Hans", "abc");
     }
+
 
     public boolean login(String userName, String password) {
         if (personMap.containsKey(password) && personMap.containsValue(userName)) {

@@ -14,8 +14,12 @@ public class Item {
     }
 
 
-    public void setStock(int stockIncrease){
-       this.stock = stock;
+    public void addItem(int stockIncrease){
+       this.stock = stock + stockIncrease;
+    }
+
+    public void removeItem(int stockDecrease){
+        this.stock= stock - stockDecrease;
     }
 
 

@@ -19,22 +19,25 @@ public class Stock {
         return stock;
     }
 
+    public void setStock(List<Item> stock) {
+        this.stock = stock;
+    }
 
     /*
-    private int date;
-    private int numberItems;
-    private Item item;
-    private Person person;
+        private int date;
+        private int numberItems;
+        private Item item;
+        private Person person;
 
 
 
-    public Stock(int date; int numberItems; Item item; Person person){
-        this.date = date;
-        this.numberItems = numberItems;
-        this.item  = item;
-        this.person = person;
-    }
-    */
+        public Stock(int date; int numberItems; Item item; Person person){
+            this.date = date;
+            this.numberItems = numberItems;
+            this.item  = item;
+            this.person = person;
+        }
+        */
     public void addNewItem(Item item) {
         stock.add(item);
         }

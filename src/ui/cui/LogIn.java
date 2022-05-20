@@ -43,8 +43,8 @@ class UI {
     private void showEmployeeMenu() {
         System.out.print("Commands: \n  Show items (a-z): 'i' ");
         System.out.print("         \n Show items (item number) : 'n' ");
-        System.out.print("         \n Add new item: 'a' ");
-        System.out.print("         \n Increase stock: 'k' ");
+        System.out.print("         \n Add new item: 'a' "); //this is made by adding a setter??
+        System.out.print("         \n Increase stock: 'k' "); // thi set the variable int stock in Item --somehow throug the
         System.out.print("         \n Register new employee: 'y' ");
         System.out.print("         \n Show stock list: 'x' ");
         System.out.print("         \n  ---------------------");

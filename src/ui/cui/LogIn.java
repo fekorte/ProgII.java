@@ -122,6 +122,8 @@ class UI {
                 break;
          case "x":
         break;
+            default:
+                break;
     }
 
 }

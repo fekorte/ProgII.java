@@ -12,12 +12,14 @@ public class Stock {
     public Stock(){
         addNewItem(new Item("cup", 2.5f, 5 , 7 ));
         addNewItem(new Item("Vaso", .5f, 5 , 3 ));
+        addNewItem(new Item("T-Shirt", 1.5f, 234, 0));
 
     }
 
     public List<Item> getStock(){
         return stock;
     }
+
 
     public void setStock(List<Item> stock) {
         this.stock = stock;

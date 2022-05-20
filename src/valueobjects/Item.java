@@ -26,7 +26,7 @@ public class Item {
         this.numberInStock = numberInStock + numberNewItem;
     }
 
-
+///dont we need a IOExeption to say that there ins nothing??
     public String toString() {
         String availability  = (numberInStock > 0) ? "available" : "sold out"; //this is to know if we have this item in stock
         return ("Item Name " + itemName +  " / Item code: " + itemCode+ " / Availability: " + availability );

@@ -7,6 +7,9 @@ import valueobjects.Person;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 class UI {
@@ -41,8 +44,8 @@ class UI {
     }
 
     private void showEmployeeMenu() {
-        System.out.print("Commands: \n  Show items (a-z): 'i' ");
-        System.out.print("         \n Show items (item number) : 'n' ");
+        System.out.print("Commands: \n  Show items (a-z item name): 'i' ");
+        System.out.print("         \n Show items (item code) : 'n' ");
         System.out.print("         \n Add new item: 'a' "); //this is made a new product to sell
         System.out.print("         \n Increase stock: 'k' "); // to put more of the same products--thi set the variable int stock in Item --somehow throug the
         System.out.print("         \n Register new employee: 'y' ");
@@ -91,13 +94,25 @@ class UI {
                 manager.registerClient(userName, password, address);
                 break;
             case "i":
+            {
                List<Item> items = manager.getItems();
                for(Item element: items){
                    System.out.println(element);
                }
+            }
             break;
-            case "n":
+            case "n": //Show items (item number) : 'n' "
+            {
+                List<Item> items = manager.getItems();
+
+
+                Collections.sort(items, Comparator.comparingInt(Item::getItemCode));
+                for(Item element: items){
+                    System.out.println(element);
+                }
+            }
             break;
+
             case "s":
             break;
             case "c":

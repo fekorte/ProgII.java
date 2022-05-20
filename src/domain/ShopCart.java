@@ -36,6 +36,12 @@ List<Item> cartItems= new ArrayList<Item>();
     }
 
 
+    public void buy(){
+
+
+
+    }
+
 
     public ShopCart(Client client, int date, Item item){
         this.client = client;

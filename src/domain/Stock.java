@@ -8,6 +8,18 @@ import java.util.List;
 public class Stock {
 
     private List<Item> stock = new ArrayList<>();
+
+    public Stock(){
+        addNewItem(new Item("cup", 2.5f, 5 , 7 ));
+        addNewItem(new Item("Vaso", .5f, 5 , 3 ));
+
+    }
+
+    public List<Item> getStock(){
+        return stock;
+    }
+
+
     /*
     private int date;
     private int numberItems;

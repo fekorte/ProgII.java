@@ -91,6 +91,7 @@ class UI {
                 manager.registerClient(userName, password, address);
                 break;
             case "i":
+               List<Item> items = manager.getItems();
             break;
             case "n":
             break;

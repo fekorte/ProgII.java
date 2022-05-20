@@ -49,7 +49,14 @@ public class Item {
 
     public int getItemCode(){ return itemCode;}
 
+<<<<<<< Updated upstream
     public int getNumberInStock() {return numberInStock;}
+=======
+    public int getStock() {return stock;}
+
+
+
+>>>>>>> Stashed changes
 }
 
 

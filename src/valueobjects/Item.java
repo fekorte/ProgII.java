@@ -43,20 +43,21 @@ public class Item {
      * }
      */
     //methods to acces the information of the items
-    public String getItemName() {
+    public String getItemName () {
         return itemName;
     }
 
-    public float getPrice() {
+    public float getPrice () {
         return price;
     }
 
-    public int getItemCode() {
+
+    public int getItemCode () {
         return itemCode;
     }
 
 
-    public int getNumberInStock() {
+    public int getNumberInStock () {
         return numberInStock;
     }
 

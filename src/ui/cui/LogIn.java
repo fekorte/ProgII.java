@@ -62,7 +62,7 @@ class UI {
         return in.readLine();
     }
 
-    private void processInput(String line) throws IOException {
+    private void processInput (String line) throws IOException {
         String userName;
         String password;
         String address;
@@ -70,82 +70,81 @@ class UI {
 
         switch (line) {
             case "l":
-                System.out.print("Username > ");
-                userName = readInput();
-                System.out.print("Password > ");
-                password = readInput();
-                if (manager.login(userName, password)) {
-                    System.out.println("Login successful");
+                System.out.print ("Username > ");
+                userName = readInput ();
+                System.out.print ("Password > ");
+                password = readInput ();
+                if (manager.login (userName, password)) {
+                    System.out.println ("Login successful");
                     loggedin = true;
-                    if (manager.selectMenu(userName)) {
+                    if (manager.selectMenu (userName)) {
                         itsAClient = true;
                     } else {
                         itsAClient = false;
                     }
                 } else {
-                    System.out.println("Login failed");
+                    System.out.println ("Login failed");
                     loggedin = false;
                 }
                 break;
 
             case "r":
-                System.out.print("Username > ");
-                userName = readInput();
-                System.out.print("Password > ");
-                password = readInput();
-                System.out.print("Address > ");
-                address = readInput();
-                manager.registerClient(userName, password, address);
+                System.out.print ("Username > ");
+                userName = readInput ();
+                System.out.print ("Password > ");
+                password = readInput ();
+                System.out.print ("Address > ");
+                address = readInput ();
+                manager.registerClient (userName, password, address);
                 break;
             case "i":
             {
-               List<Item> items = manager.getItems();
-               for(Item element: items){
-                   System.out.println(element);
-               }
+                List<Item> itemsI = manager.getItems (); //this is not ordering by name :(
+
+                list (itemsI, Comparator.comparing (Item::getItemName));
+                for (Item element : itemsI) {
+                    System.out.println (element);
+                }
             }
             break;
             case "n": //Show items (item number) : 'n' "
             {
-                List<Item> items = manager.getItems();
-
-
-                Collections.sort(items, Comparator.comparingInt(Item::getItemCode));
-                for(Item element: items){
-                    System.out.println(element);
+                List<Item> items = manager.getItems ();
+                Collections.sort (items, Comparator.comparingInt (Item::getItemCode));
+                for (Item element : items) {
+                    System.out.println (element);
                 }
             }
             break;
 
             case "s":
-            break;
+                break;
             case "c":
-            break;
+                break;
             case "e":
-            break;
+                break;
             case "b":
-            break;
+                break;
             case "a":
-            break;
+                break;
             case "k"://Increase stock
 
 
-
-            break;
-            case "y":
-                System.out.print("Username > ");
-                userName = readInput();
-                System.out.print("Password > ");
-                password = readInput();
-                manager.registerEmployee(userName, password);
                 break;
-         case "x":
-        break;
+            case "y":
+                System.out.print ("Username > ");
+                userName = readInput ();
+                System.out.print ("Password > ");
+                password = readInput ();
+                manager.registerEmployee (userName, password);
+                break;
+            case "x":
+                break;
             default:
                 break;
-    }
+        }
 
-}
+    }
 
     public void run() {
         String input = "";

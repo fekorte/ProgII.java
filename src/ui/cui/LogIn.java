@@ -99,9 +99,10 @@ class UI {
                 break;
             case "i":
             {
-                List<Item> itemsI = manager.getItems (); //this is not ordering by name :(
+                List<Item> itemsI = manager.getItems(); //this is not ordering by name :(
+                System.out.println(itemsI.get(0).getItemName ());
 
-                list (itemsI, Comparator.comparing (Item::getItemName));
+                Collections.sort (itemsI, Comparator.comparing (itemsI.getItemName()));
                 for (Item element : itemsI) {
                     System.out.println (element);
                 }

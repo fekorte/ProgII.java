@@ -14,7 +14,7 @@ public class Item {
     }
 
 
-    public void addItem(int stockIncrease) {
+    public void addItemInStock (int stockIncrease) {
         this.numberInStock = numberInStock + stockIncrease;
     }
 

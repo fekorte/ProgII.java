@@ -34,7 +34,7 @@ class UI {
 
     private void showClientMenu() {
         System.out.print("Commands: \n  Show items (a-z): 'i' ");
-        //System.out.print("         \n Show items (item number) : 'n' ");
+        System.out.print("         \n Show items (item number) : 'n' ");
         System.out.print("         \n Select items: 's' ");
         System.out.print("         \n Change shopping cart: 'c' ");
         System.out.print("         \n Empty shopping cart: 'e' ");
@@ -68,58 +68,68 @@ class UI {
         String address;
         List<Item> list;
 
-        switch (line) {
+        switch (line){
             case "l":
-                System.out.print ("Username > ");
-                userName = readInput ();
-                System.out.print ("Password > ");
-                password = readInput ();
-                if (manager.login (userName, password)) {
-                    System.out.println ("Login successful");
-                    loggedin = true;
-                    if (manager.selectMenu (userName)) {
-                        itsAClient = true;
+                System.out.print("Username > ");
+                userName=readInput();
+                System.out.print("Password > ");
+                password=readInput();
+                if (manager.login(userName, password)) {
+                    System.out.println("Login successful");
+                    loggedin=true;
+                    if (manager.selectMenu(userName)) {
+                        itsAClient=true;
                     } else {
-                        itsAClient = false;
+                        itsAClient=false;
                     }
                 } else {
-                    System.out.println ("Login failed");
-                    loggedin = false;
+                    System.out.println("Login failed");
+                    loggedin=false;
                 }
                 break;
 
             case "r":
-                System.out.print ("Username > ");
-                userName = readInput ();
-                System.out.print ("Password > ");
-                password = readInput ();
-                System.out.print ("Address > ");
-                address = readInput ();
-                manager.registerClient (userName, password, address);
+                System.out.print("Username > ");
+                userName=readInput();
+                System.out.print("Password > ");
+                password=readInput();
+                System.out.print("Address > ");
+                address=readInput();
+                manager.registerClient(userName, password, address);
                 break;
-            case "i":
-            {
-                List<Item> itemsI = manager.getItems(); //this is not ordering by name :(
-                System.out.println(itemsI.get(0).getItemName ());
+            case "i":{
+                List<Item> itemsI=manager.getItems(); //this is not ordering by name :(
+                System.out.println(itemsI.get(0).getItemName());
 
-                Collections.sort (itemsI, Comparator.comparing (itemsI.getItemName()));
-                for (Item element : itemsI) {
-                    System.out.println (element);
+                Collections.sort(itemsI, Comparator.comparing(Item::getItemName, String.CASE_INSENSITIVE_ORDER));
+                for(Item element: itemsI){
+                    System.out.println(element);
                 }
             }
             break;
             case "n": //Show items (item number) : 'n' "
             {
-                List<Item> items = manager.getItems ();
-                Collections.sort (items, Comparator.comparingInt (Item::getItemCode));
-                for (Item element : items) {
-                    System.out.println (element);
+                List<Item> items=manager.getItems();
+                Collections.sort(items, Comparator.comparingInt(Item::getItemCode));
+                for(Item element: items){
+                    System.out.println(element);
                 }
             }
             break;
 
             case "s":
-                break;
+               // private void showSelectionOption () { //no idea why is requres a input variable :(
+                //System.out.print("Write the items Name");
+               // System.out.flush();
+            //}
+            // private String readName() throws IOException {
+            //private String Name =in.readLine();
+            //if(Name = .getItemName --> way to get the variables from the list, compare
+            //then chose it and print it out
+            // return in.readLine();
+            //}
+
+            break;
             case "c":
                 break;
             case "e":
@@ -129,7 +139,16 @@ class UI {
             case "a":
                 break;
             case "k"://Increase stock
+            {
+                List<Item> items=manager.getItems();
+                //imput the ItemName
+                //select the "object"
+                //imput --> the user will put an int, which will be the variable "int stockIncrease"
+                //call the method addItemInStock
+                //then System.out.println (the object to show the user that the item number was changed )
 
+
+            }
 
                 break;
             case "y":

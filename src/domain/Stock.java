@@ -11,10 +11,10 @@ public class Stock {
 
     public Stock(){
         addNewItem(new Item("cup", 2.5f, 5 , 7 ));
-        addNewItem(new Item("Vaso", .5f, 5 , 3 ));
-        addNewItem(new Item("T-Shirt", 1.5f, 234, 0));
-        addNewItem(new Item("Zapato", 0.5f, 234, 1));
-        addNewItem(new Item("ABC", 10.5f, 234, 0));
+        addNewItem(new Item("vaso", .5f, 5 , 3 ));
+        addNewItem(new Item("t-Shirt", 1.5f, 234, 0));
+        addNewItem(new Item("zapato", 0.5f, 234, 1));
+        addNewItem(new Item("aBC", 10.5f, 234, 0));
 
     }
 
@@ -25,7 +25,7 @@ public class Stock {
 
     public void setStock(List<Item> stock) {
         this.stock = stock;
-    }
+    } //now I'm not sure if we need this or if we better increase the variable "numberInStock"
 
 
 

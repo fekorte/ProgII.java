@@ -126,20 +126,21 @@ class UI {
                 System.out.print("Item name > ");
                 item = readInput();
                 System.out.print("Quantity >");
-                quantity = in.read();
+                quantity = Integer.parseInt(readInput());
                 List<Item> itemsS = manager.getItems();
-                for (Item element : itemsS){ //iterates through list and checks if item is in stock
-                    if(element.getItemName() == item){
+                for (Item element : itemsS) { //iterates through list and checks if item is in stock
+                    if (element.getItemName().equals(item)) {
                         Item copyItem = element; //copy of item, to change quantity in cart but not in stock
-                        if(element.getNumberInStock() >= quantity) { //checks if user didnt select more items than available in stock
+                        if (element.getNumberInStock() >= quantity) { //checks if user didnt select more items than available in stock
                             copyItem.setNumberInStock(quantity);
                             cart.putItemsInCart(copyItem); //puts items in cart
-                            System.out.print("Items are in cart");
+                            System.out.println("Added to cart.");
+                            break;
                         } else {
-                            System.out.print("Too many items selected");
+                            System.out.println("Too many items selected.");
                         }
                     } else {
-                        System.out.print("Item not available. Please select a different item.");
+                        System.out.println("Selected item not available.");
                     }
                 }
                 break;
@@ -147,24 +148,25 @@ class UI {
                 System.out.print("Item name > ");
                 item = readInput();
                 System.out.print("Quantity >");
-                quantity = in.read();
+                quantity = Integer.parseInt(readInput());
                 List<Item> itemsV = cart.getItemsInCart();
                 for(Item element : itemsV){
-                    if(element.getItemName() == item){
+                    if(element.getItemName().equals(item)){
                         Item copyItem = element;
-                        if(element.getNumberInStock() <= quantity) { //checks if user didnt remove more items than available in cart
+                        if(element.getNumberInStock() >= quantity) { //checks if user didnt remove more items than available in cart
                             copyItem.setNumberInStock(quantity);
                             cart.removeItemsFromCart(copyItem); //removes items from cart
-                            System.out.print("Items were removed");
+                            System.out.println("Removed from cart.");
+                            break;
                         } else {
-                            System.out.print("Too many items selected");
+                            System.out.println("Too many items selected.");
                         }
                     } else {
-                        System.out.print("Item not available. Please select a different item.");
+                        System.out.println("Item not available. Please select a different item.");
                     }
                 }
                 break;
-                
+
             case "e":
                 cart.emptyCart();
                 System.out.print("Cart has been emptied.");

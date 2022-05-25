@@ -5,11 +5,4 @@ public class  Employee extends Person {
         super(name);
     }
 }
-    /*
-    addNewItem();
-
-    addItemToStock();
-
-    registerNewEmployee();
-    */
 

@@ -18,6 +18,8 @@ public class Item {
         this.numberInStock = numberInStock + stockIncrease;
     }
 
+    public void setNumberInStock(int numberInStock){ this.numberInStock = numberInStock; }
+
     public void removeItem(int stockDecrease) {
         this.numberInStock = numberInStock - stockDecrease;//in case you want to sell an item we decrease it in the number of objects we bought=stockDecrease
     }

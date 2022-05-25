@@ -9,13 +9,4 @@ public class Client extends Person {
 
     }
 }
-    /*
-    putItemsInCart();
-
-    changeNumberItemsInCart();
-
-    emptyCart();
-
-    buy();
-     */
 

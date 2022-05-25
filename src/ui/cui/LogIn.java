@@ -1,13 +1,14 @@
 package ui.cui;
 
 import domain.EShopManager;
+import domain.ShopCart;
 import valueobjects.Item;
 import valueobjects.Person;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -15,9 +16,10 @@ import java.util.List;
 class UI {
     private BufferedReader in;
     private Person user;
-    boolean loggedin;
+    boolean loggedIn;
     boolean itsAClient;
     private EShopManager manager = new EShopManager();
+    private ShopCart cart = new ShopCart();
 
     public UI() throws IOException {
         in = new BufferedReader(new InputStreamReader(System.in));
@@ -33,27 +35,29 @@ class UI {
     }
 
     private void showClientMenu() {
-        System.out.print("Commands: \n  Show items (a-z): 'i' ");
+        System.out.print("Commands:\n ---------------------");
+        System.out.print("         \n Show items (a-z): 'i' ");
         System.out.print("         \n Show items (item number) : 'n' ");
         System.out.print("         \n Select items: 's' ");
-        System.out.print("         \n Change shopping cart: 'c' ");
+        System.out.print("         \n Remove items: 'v' ");
         System.out.print("         \n Empty shopping cart: 'e' ");
         System.out.print("         \n Buy selected items: 'b' ");
-        System.out.print("         \n  ---------------------");
+        System.out.print("         \n ---------------------");
         System.out.println("         \n  Exit:        'q'");
         System.out.print("> ");
         System.out.flush();
     }
 
     private void showEmployeeMenu() {
-        System.out.print("Commands: \n  Show items (a-z item name): 'i' ");
+        System.out.print("Commands:\n ---------------------");
+        System.out.print("         \n Show items (a-z item name): 'i' ");
         System.out.print("         \n Show items (item code) : 'n' ");
         System.out.print("         \n Add new item: 'a' "); //this is made a new product to sell
         System.out.print("         \n Increase stock: 'k' "); // to put more of the same products--thi set the variable int stock in Item --somehow throug the
         System.out.print("         \n Register new employee: 'y' "); //working
         System.out.print("         \n Show Stock logBook: 'x' "); //Logbook--> all the movements done in stock-->creates a txt file
-        System.out.print("         \n  ---------------------");
-        System.out.println("         \n  Exit:        'q'");
+        System.out.print("         \n ---------------------");
+        System.out.println("       \n  Exit:        'q'");
         System.out.print("> ");
         System.out.flush();
     }
@@ -67,72 +71,103 @@ class UI {
         String password;
         String address;
         List<Item> list;
+        String item;
+        int quantity;
 
-        switch (line){
+        switch (line) {
             case "l":
                 System.out.print("Username > ");
-                userName=readInput();
+                userName = readInput();
                 System.out.print("Password > ");
-                password=readInput();
+                password = readInput();
                 if (manager.login(userName, password)) {
                     System.out.println("Login successful");
-                    loggedin=true;
+                    loggedIn = true;
                     if (manager.selectMenu(userName)) {
-                        itsAClient=true;
+                        itsAClient = true;
                     } else {
-                        itsAClient=false;
+                        itsAClient = false;
                     }
                 } else {
                     System.out.println("Login failed");
-                    loggedin=false;
+                    loggedIn = false;
                 }
                 break;
-
             case "r":
                 System.out.print("Username > ");
-                userName=readInput();
+                userName = readInput();
                 System.out.print("Password > ");
-                password=readInput();
+                password = readInput();
                 System.out.print("Address > ");
-                address=readInput();
+                address = readInput();
                 manager.registerClient(userName, password, address);
                 break;
-            case "i":{
-                List<Item> itemsI=manager.getItems(); //this is not ordering by name :(
+            case "i": {
+                List<Item> itemsI = manager.getItems();
                 System.out.println(itemsI.get(0).getItemName());
 
                 Collections.sort(itemsI, Comparator.comparing(Item::getItemName, String.CASE_INSENSITIVE_ORDER));
-                for(Item element: itemsI){
+                for (Item element : itemsI) {
                     System.out.println(element);
                 }
             }
-            break;
+                break;
             case "n": //Show items (item number) : 'n' "
             {
-                List<Item> items=manager.getItems();
+                List<Item> items = manager.getItems();
                 Collections.sort(items, Comparator.comparingInt(Item::getItemCode));
-                for(Item element: items){
+                for (Item element : items) {
                     System.out.println(element);
                 }
             }
-            break;
+                break;
 
             case "s":
-               // private void showSelectionOption () { //no idea why is requres a input variable :(
-                //System.out.print("Write the items Name");
-               // System.out.flush();
-            //}
-            // private String readName() throws IOException {
-            //private String Name =in.readLine();
-            //if(Name = .getItemName --> way to get the variables from the list, compare
-            //then chose it and print it out
-            // return in.readLine();
-            //}
-
-            break;
-            case "c":
+                System.out.print("Item name > ");
+                item = readInput();
+                System.out.print("Quantity >");
+                quantity = in.read();
+                List<Item> itemsS = manager.getItems();
+                for (Item element : itemsS){ //iterates through list and checks if item is in stock
+                    if(element.getItemName() == item){
+                        Item copyItem = element; //copy of item, to change quantity in cart but not in stock
+                        if(element.getNumberInStock() >= quantity) { //checks if user didnt select more items than available in stock
+                            copyItem.setNumberInStock(quantity);
+                            cart.putItemsInCart(copyItem); //puts items in cart
+                            System.out.print("Items are in cart");
+                        } else {
+                            System.out.print("Too many items selected");
+                        }
+                    } else {
+                        System.out.print("Item not available. Please select a different item.");
+                    }
+                }
                 break;
+            case "v":
+                System.out.print("Item name > ");
+                item = readInput();
+                System.out.print("Quantity >");
+                quantity = in.read();
+                List<Item> itemsV = cart.getItemsInCart();
+                for(Item element : itemsV){
+                    if(element.getItemName() == item){
+                        Item copyItem = element;
+                        if(element.getNumberInStock() <= quantity) { //checks if user didnt remove more items than available in cart
+                            copyItem.setNumberInStock(quantity);
+                            cart.removeItemsFromCart(copyItem); //removes items from cart
+                            System.out.print("Items were removed");
+                        } else {
+                            System.out.print("Too many items selected");
+                        }
+                    } else {
+                        System.out.print("Item not available. Please select a different item.");
+                    }
+                }
+                break;
+                
             case "e":
+                cart.emptyCart();
+                System.out.print("Cart has been emptied.");
                 break;
             case "b":
                 break;
@@ -169,7 +204,7 @@ class UI {
     public void run() {
         String input = "";
         do {
-            if(loggedin){
+            if(loggedIn){
                 if(itsAClient){
                     showClientMenu();
                 } else {
@@ -178,7 +213,6 @@ class UI {
             } else {
                 showMenu();
             }
-
             try {
                 input = readInput();
                 processInput(input);
@@ -192,8 +226,6 @@ class UI {
     public static void main(String[] args) throws IOException {
         UI cui = new UI();
         cui.run();
-
-
         }
 
 }

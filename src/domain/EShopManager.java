@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 public class EShopManager {
-    private Map<String, String> personMap = new HashMap<>();
+    private Map<String, String> personMap = new HashMap<>();//maps are better for people
     private Map<String, Client> clientList = new HashMap<>();
 
     private Map<String, Employee> employeeList = new HashMap<>();
@@ -47,7 +47,7 @@ public class EShopManager {
 
     public void registerEmployee(String userName, String password) {
         Employee employee = new Employee(userName);
-        personMap.putIfAbsent(password, userName);
+        personMap.putIfAbsent(password, userName);//if the person is there it wont works
         employeeList.putIfAbsent(userName, employee);
     }
 

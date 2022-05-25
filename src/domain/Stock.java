@@ -47,12 +47,9 @@ public class Stock {
     public void addNewItem(Item item) {
         stock.add(item);
         }
+        //in longin the user will create object item-->  new Item("cup", 2.5f, 5 , 7 ));
 
 
-    //Incorrect method, needs to include arrayList
-   public void addItemToStock(int numberOfItems){
-    //    Item.setStock(numberOfItems);
-   }
    public void removeItemFromStock(Item item){
         stock.remove(item);
    }

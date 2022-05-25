@@ -50,8 +50,8 @@ class UI {
         System.out.print("         \n Show items (item code) : 'n' ");
         System.out.print("         \n Add new item: 'a' "); //this is made a new product to sell
         System.out.print("         \n Increase stock: 'k' "); // to put more of the same products--thi set the variable int stock in Item --somehow throug the
-        System.out.print("         \n Register new employee: 'y' ");
-        System.out.print("         \n Show stock list: 'x' ");
+        System.out.print("         \n Register new employee: 'y' "); //working
+        System.out.print("         \n Show Stock logBook: 'x' "); //Logbook--> all the movements done in stock-->creates a txt file
         System.out.print("         \n  ---------------------");
         System.out.println("         \n  Exit:        'q'");
         System.out.print("> ");
@@ -142,7 +142,7 @@ class UI {
             {
                 List<Item> items=manager.getItems();
                 //imput the ItemName
-                //select the "object"
+                //select the "object"--> a method which select the object from the array
                 //imput --> the user will put an int, which will be the variable "int stockIncrease"
                 //call the method addItemInStock
                 //then System.out.println (the object to show the user that the item number was changed )

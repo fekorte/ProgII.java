@@ -20,11 +20,15 @@ List<Item> cartItems= new ArrayList<Item>();
 
     public void putItemsInCart(Item item){
         cartItems.add(item);
-    }
+    }//
+    //in longin the user will create object item-->  new Item("cup", 2.5f, 5 , 7 ));
 
     public void changeNumberItemsInCart(Item item, int num){
         cartItems.set(num,item);
     }
+    //this creates an int wishStock
+    //when someone buy this then: numberInStock- wishStock
+
 
 
     public void emptyCart(){
@@ -34,10 +38,10 @@ List<Item> cartItems= new ArrayList<Item>();
     public void removeItemsFromCart(Item item){
         cartItems.remove(item);
     }
-
+   //this delates all the objects with the same name
 
     public void buy(){
-
+        //when someone buy this then: numberInStock- wishStock
 
 
     }

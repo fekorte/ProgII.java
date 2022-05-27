@@ -205,17 +205,18 @@ class UI {
                 break;
             case "k"://Increase stock
             {
-                List<Item> items=manager.getItems();
-                //imput the ItemName
-                //select the "object"--> a method which select the object from the array
-                //imput --> the user will put an int, which will be the variable "int stockIncrease"
-                //call the method addItemInStock
-                //then System.out.println (the object to show the user that the item number was changed )
-
-
+                System.out.print("Item name > ");
+                String itemName = readInput();
+                System.out.print("Total quantity > ");
+                quantity = Integer.parseInt(readInput());
+                List<Item> itemsK=manager.getItems();
+                for(Item element : itemsK){
+                    if (element.getItemName().equals(itemName)){
+                        element.setNumberInStock(quantity);
+                    }
+                }
             }
-
-            break;
+                break;
             case "y":
                 System.out.print ("Username > ");
                 userName = readInput ();

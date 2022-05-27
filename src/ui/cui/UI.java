@@ -179,7 +179,29 @@ class UI {
                 break;
             case "b":
                 break;
-            case "a":
+            case "a":{
+                List<Item> items=manager.getItems();
+                //imput the ItemName
+                //imput the Variable
+                System.out.print("Item Name > ");
+                String itemName=readInput();
+                System.out.print("Price > ");
+                float price=Float.parseFloat(readInput());
+                System.out.print("Item code");
+                int itemCode=Integer.parseInt(readInput());
+                System.out.print("Number of items");
+                int numberInStock=Integer.parseInt(readInput());
+                //create de Item object
+                Item itemNew=new Item(itemName, price, itemCode, numberInStock);
+
+                //add new item in the list
+                items.add(itemNew);
+                //Organizing and printing the new list
+                Collections.sort(items, Comparator.comparing(Item::getItemName, String.CASE_INSENSITIVE_ORDER));
+                for(Item element: items){
+                    System.out.println(element);
+                }
+            }
                 break;
             case "k"://Increase stock
             {

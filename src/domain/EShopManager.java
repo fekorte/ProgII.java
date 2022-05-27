@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 public class EShopManager {
-    private Map<String, String> personMap = new HashMap<>();//maps are better for people
+    private Map<String, String> personMap = new HashMap<>();//maps are better for people-- for maps we need a key and a value
     private Map<String, Client> clientList = new HashMap<>();
 
     private Map<String, Employee> employeeList = new HashMap<>();

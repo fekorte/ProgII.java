@@ -1,18 +1,30 @@
-package domain;
+package valueobjects;
 
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-
+import domain.ShopCart;
 
 public class Receipt {
+    private Person user;
+    private int date;
+    private ShopCart cart;
 
-  //  public Receipt {
+
+    public Receipt(Person user, ShopCart cart) {
+        this.user = user;
+        this.date = 2022;
+        this.cart = cart;
+    }
+
+    public String toString() {
+        return ("Client name: " + user.getName() + "\n" + "Client ID: " + user.getIdNumber() + "\n" + "Date: " + date + "\n" + "Bought Items: " + cart.getItemsInCart() + "\n" + "End price: " + cart.endPrice() + "\n" + "Thank you for shopping with us.");
+    }
+}
+    //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+   // LocalDateTime now = LocalDateTime.now();
+   //System.out.println(dtf.format(now));
+
+
+        //  public Receipt {
 
 //   }
 
@@ -32,7 +44,7 @@ public class Receipt {
 
     //public void openForWriting(String datei) throws IOException {
       //  writer = new PrintWriter(new BufferedWriter(new FileWriter(datei)));
-    }
+
 
 
 

@@ -20,18 +20,19 @@ public class Item {
 
     public void setNumberInStock(int numberInStock){ this.numberInStock = numberInStock; }
 
+
     public void removeItem(int stockDecrease) {
         this.numberInStock = numberInStock - stockDecrease;//in case you want to sell an item we decrease it in the number of objects we bought=stockDecrease
     }
 
     //public void addToStock(int numberNewItem) {
-      //  this.numberInStock = numberInStock + numberNewItem;
-    //} --> to add a new object to the Lis
+      //this.numberInStock = numberInStock + numberNewItem;
+    //} //--> to add a new object to the Lis
 
     ///dont we need a IOExeption to say that there ins nothing??
     public String toString() {
         String availability = (numberInStock > 0) ? "available" : "sold out"; //this is to know if we have this item in stock
-        return ("Item Name " + itemName + " / Item code: " + itemCode + " / Availability: " + availability + " /Number in stock: " + numberInStock );
+        return ("Item Name " + itemName + " / Item code: " + itemCode + " / Availability: " + availability + " /Number in stock: " + numberInStock + "\n");
     }
 
     /**

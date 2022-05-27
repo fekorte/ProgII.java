@@ -4,11 +4,11 @@ import domain.EShopManager;
 import domain.ShopCart;
 import valueobjects.Item;
 import valueobjects.Person;
+import valueobjects.Receipt;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -74,6 +74,7 @@ class UI {
         List<Item> list;
         String item;
         int quantity;
+        boolean inList;
 
         switch (line) {
             case "l":
@@ -81,18 +82,19 @@ class UI {
                 userName = readInput();
                 System.out.print("Password > ");
                 password = readInput();
-                if (manager.login(userName, password)) {
+                user = manager.login(userName, password);
+                if (user != null) {
                     System.out.println("Login successful");
                     loggedIn = true;
-                    if (manager.selectMenu(userName)) {
+                    if (manager.selectMenu(user)) {
                         itsAClient = true;
                     } else {
                         itsAClient = false;
                     }
                 } else {
-                    System.out.println("Login failed");
-                    loggedIn = false;
-                }
+                        System.out.println("Login failed");
+                        loggedIn = false;
+                    }
                 break;
             case "r":
                 System.out.print("Username > ");
@@ -131,24 +133,31 @@ class UI {
                 item = readInput();
                 System.out.print("Quantity >");
                 quantity = Integer.parseInt(readInput());
-                List<Item> itemsS = manager.getItems();
-                for (Item element : itemsS) { //iterates through list and checks if item is in stock
-                    if (element.getItemName().equals(item)) {
-                        Item copyItem = element; //copy of item, to change quantity in cart but not in stock
+                List<Item> itemsS=manager.getItems();
+                List<Item> itemsL = cart.getItemsInCart();
+                for(Item element : itemsS){
+                    if(element.getItemName().equals(item)){
+                        Item copyItem = element;//copy of item, to change quantity in cart but not in stock
                         if (element.getNumberInStock() >= quantity) { //checks if user didnt select more items than available in stock
-                            copyItem.setNumberInStock(1);
-                            while(quantity != 0){
-                                cart.putItemsInCart(copyItem);
-                                quantity--;
+                            for(Item article : itemsL){
+                                if(article.getItemName().equals(item)) {
+                                    cart.increaseItemStock(item, quantity);
+                                    System.out.println("Added to cart");
+                                    break;
+                                }
                             }
-                            System.out.println("Added to cart.");
+                            copyItem.setNumberInStock(0);
+                            copyItem.setNumberInStock(quantity);
+                            cart.putItemsInCart(copyItem);
+                            System.out.println("Added to cart");
                             break;
-                        } else {
+                        }else {
                             System.out.println("Too many items selected.");
                         }
                     } else {
                         System.out.println("Selected item not available.");
                     }
+
                 }
                 break;
             case "v":
@@ -156,33 +165,47 @@ class UI {
                 item = readInput();
                 System.out.print("Quantity >");
                 quantity = Integer.parseInt(readInput());
+                cart.decreaseItemStock(item,quantity);
                 List<Item> itemsV = cart.getItemsInCart();
                 for(Item element : itemsV){
                     if(element.getItemName().equals(item)){
-                        Item copyItem = element;
-                        copyItem.setNumberInStock(1);
-                            while(quantity != 0) {
-                                cart.removeItemsFromCart(copyItem); //removes items from cart
-                                quantity--;
+                        if(element.getNumberInStock() >= quantity){
+                            cart.decreaseItemStock(item,quantity);
+                            //if(element.getNumberInStock() == 0){
+                                //cart.removeItemsFromCart(Item item);
+                            //}
                             System.out.println("Removed from cart.");
-                            break;
+                        } else {
+                            System.out.println("Too many items selected.");
                         }
                     } else {
                         System.out.println("Item not available. Please select a different item.");
                     }
                 }
                 break;
-
             case "e":
                 cart.emptyCart();
                 System.out.print("Cart has been emptied.");
                 break;
             case "b":
+                List<Item> itemsB=manager.getItems();
+                List<Item> itemsC=cart.getItemsInCart();
+                for(Item element : itemsB){
+                    for(Item toBuy : itemsC){
+                        if(element.getItemName().equals(toBuy.getItemName())){
+                            int num = toBuy.getNumberInStock();
+                            element.removeItem(num);
+                        }
+                    }
+                }
+                Receipt receipt = cart.buy(user, cart);
+                System.out.println(receipt);
+                cart.emptyCart();
                 break;
             case "a":{
                 List<Item> items=manager.getItems();
-                //imput the ItemName
-                //imput the Variable
+                //input the ItemName
+                //input the Variable
                 System.out.print("Item Name > ");
                 String itemName=readInput();
                 System.out.print("Price > ");
@@ -227,7 +250,7 @@ class UI {
             case "x":
                 break;
             case "w":
-                loggedIn=false;
+                loggedIn = false;
                 break;
             default:
                 break;

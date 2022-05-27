@@ -38,6 +38,7 @@ class UI {
         System.out.print("Commands:\n ---------------------");
         System.out.print("         \n Show items (a-z): 'i' ");
         System.out.print("         \n Show items (item number) : 'n' ");
+        System.out.print("         \n Show cart content: 'm' ");
         System.out.print("         \n Select items: 's' ");
         System.out.print("         \n Remove items: 'v' ");
         System.out.print("         \n Empty shopping cart: 'e' ");
@@ -111,6 +112,9 @@ class UI {
                     System.out.println(element);
                 }
             }
+                break;
+            case "m":
+                System.out.println(cart.getItemsInCart());
                 break;
             case "n": //Show items (item number) : 'n' "
             {

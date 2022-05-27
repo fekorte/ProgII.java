@@ -136,8 +136,11 @@ class UI {
                     if (element.getItemName().equals(item)) {
                         Item copyItem = element; //copy of item, to change quantity in cart but not in stock
                         if (element.getNumberInStock() >= quantity) { //checks if user didnt select more items than available in stock
-                            copyItem.setNumberInStock(quantity);
-                            cart.putItemsInCart(copyItem); //puts items in cart
+                            copyItem.setNumberInStock(1);
+                            while(quantity != 0){
+                                cart.putItemsInCart(copyItem);
+                                quantity--;
+                            }
                             System.out.println("Added to cart.");
                             break;
                         } else {
@@ -157,10 +160,12 @@ class UI {
                 for(Item element : itemsV){
                     if(element.getItemName().equals(item)){
                         Item copyItem = element;
-
+                        copyItem.setNumberInStock(1);
                         if(element.getNumberInStock() >= quantity) { //checks if user didnt remove more items than available in cart
-                            copyItem.setNumberInStock(quantity);
-                            cart.getItemsInCart(); //removes items from cart
+                            while(quantity != 0) {
+                                cart.removeItemsFromCart(copyItem); //removes items from cart
+                                quantity--;
+                            }
                             System.out.println("Removed from cart.");
                             break;
                         } else {

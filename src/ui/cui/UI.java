@@ -161,15 +161,11 @@ class UI {
                     if(element.getItemName().equals(item)){
                         Item copyItem = element;
                         copyItem.setNumberInStock(1);
-                        if(element.getNumberInStock() >= quantity) { //checks if user didnt remove more items than available in cart
                             while(quantity != 0) {
                                 cart.removeItemsFromCart(copyItem); //removes items from cart
                                 quantity--;
-                            }
                             System.out.println("Removed from cart.");
                             break;
-                        } else {
-                            System.out.println("Too many items selected.");
                         }
                     } else {
                         System.out.println("Item not available. Please select a different item.");

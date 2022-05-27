@@ -44,7 +44,7 @@ class UI {
         System.out.print("         \n Empty shopping cart: 'e' ");
         System.out.print("         \n Buy selected items: 'b' ");
         System.out.print("         \n ---------------------");
-        System.out.println("         \n  Exit:        'q'");
+        System.out.println("         \n  Exit:        'w'");
         System.out.print("> ");
         System.out.flush();
     }
@@ -58,7 +58,7 @@ class UI {
         System.out.print("         \n Register new employee: 'y' "); //working
         System.out.print("         \n Show Stock logBook: 'x' "); //Logbook--> all the movements done in stock-->creates a txt file
         System.out.print("         \n ---------------------");
-        System.out.println("       \n  Exit:        'q'");
+        System.out.println("       \n  Exit:        'w'");
         System.out.print("> ");
         System.out.flush();
     }
@@ -203,10 +203,12 @@ class UI {
                 break;
             case "x":
                 break;
+            case "w":
+                loggedIn=false;
+                break;
             default:
                 break;
         }
-
     }
 
     public void run() {

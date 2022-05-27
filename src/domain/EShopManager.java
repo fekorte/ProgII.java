@@ -28,6 +28,7 @@ public class EShopManager {
         registerClient("Peter", "234","pappel");
         registerEmployee("Hans", "abc");
         registerClient("Natha", "123", "ZMT" );
+        registerEmployee("Felina", "123");
     }
 
 

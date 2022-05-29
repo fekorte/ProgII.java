@@ -184,8 +184,8 @@ class UI {
                 System.out.print("Cart has been emptied.");
                 break;
             case "b":
-                List<Item> itemsB = manager.getItems();
-                List<Item> itemsC = cart.getItemsInCart();
+                List<Item> itemsB = manager.getItems();//all the item in stock
+                List<Item> itemsC = cart.getItemsInCart();//items in the cart
                 for(Item element : itemsB){
                     for(Item toBuy : itemsC){
                         if(element.getItemName().equals(toBuy.getItemName())){ //checks if two items in stock and cart match
@@ -194,6 +194,7 @@ class UI {
                         }
                     }
                 }
+
                 Receipt receipt = cart.buy(user, cart);
                 System.out.println(receipt);
                 cart.emptyCart();

@@ -25,15 +25,13 @@ public class ShopCart {
         cartItems.remove(item);
     }
     public void increaseItemStock(String itemName, int stockIncrease) {
-
         for(Item element : cartItems){
             if(element.getItemName().equals(itemName)){
                element.addItemInStock(stockIncrease);
             }
         }
-
-
     }
+
     public void decreaseItemStock(String itemName, int stockDecrease) {
         for(Item element : cartItems){
             if(element.getItemName().equals(itemName)){

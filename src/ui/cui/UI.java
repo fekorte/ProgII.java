@@ -71,10 +71,9 @@ class UI {
         String userName;
         String password;
         String address;
-        List<Item> list;
         String item;
         int quantity;
-        boolean inList;
+        boolean inCart = false;
 
         switch (line) {
             case "l":
@@ -116,7 +115,10 @@ class UI {
             }
             break;
             case "m":
-                System.out.println(cart.getItemsInCart());
+                List<Item> itemsM = cart.getItemsInCart();
+                for(Item element : itemsM){
+                    System.out.println(element);
+                }
                 break;
             case "n": //Show items (item number) : 'n' "
             {
@@ -133,68 +135,62 @@ class UI {
                 item = readInput();
                 System.out.print("Quantity >");
                 quantity = Integer.parseInt(readInput());
-                List<Item> itemsS=manager.getItems();
+                List<Item> itemsS = manager.getItems();
                 List<Item> itemsL = cart.getItemsInCart();
                 for(Item element : itemsS){
-                    if(element.getItemName().equals(item)){
-                        Item copyItem = element;//copy of item, to change quantity in cart but not in stock
-                        if (element.getNumberInStock() >= quantity) { //checks if user didnt select more items than available in stock
-                            for(Item article : itemsL){
-                                if(article.getItemName().equals(item)) {
-                                    cart.increaseItemStock(item, quantity);
+                    if(element.getItemName().equals(item)){//checks if element is in stock
+                        if (element.getNumberInStock() >= quantity) {//checks if user didnt select more items than available in stock
+                                for(Item article : itemsL){
+                                    if(article.getItemName().equals(item)){//checks if item is already in cart
+                                        if(element.getNumberInStock() >= article.getNumberInStock()) { //number of items in cart cant be higher than in stock
+                                            cart.increaseItemStock(item, quantity);
+                                            System.out.println("Added to cart");
+                                            inCart = true;//to save the fact that the item is already in cart
+                                        }
+                                    }
+                                }
+                                if(!inCart){ //if item was not already in cart
+                                    float price = element.getPrice();
+                                    int itemCode = element.getItemCode();
+                                    Item cartItem = new Item(item, price, itemCode, quantity);//creates new item
+                                    cart.putItemsInCart(cartItem);
                                     System.out.println("Added to cart");
-                                    break;
+                                } else {
+                                    inCart = false;
                                 }
                             }
-                            copyItem.setNumberInStock(0);
-                            copyItem.setNumberInStock(quantity);
-                            cart.putItemsInCart(copyItem);
-                            System.out.println("Added to cart");
-                            break;
-                        }else {
-                            System.out.println("Too many items selected.");
                         }
-                    } else {
-                        System.out.println("Selected item not available.");
                     }
-
-                }
                 break;
             case "v":
                 System.out.print("Item name > ");
                 item = readInput();
                 System.out.print("Quantity >");
                 quantity = Integer.parseInt(readInput());
-                cart.decreaseItemStock(item,quantity);
                 List<Item> itemsV = cart.getItemsInCart();
+                List<Item> itemsY = manager.getItems();
                 for(Item element : itemsV){
-                    if(element.getItemName().equals(item)){
-                        if(element.getNumberInStock() >= quantity){
-                            cart.decreaseItemStock(item,quantity);
-                            //if(element.getNumberInStock() == 0){
-                                //cart.removeItemsFromCart(Item item);
-                            //}
-                            System.out.println("Removed from cart.");
-                        } else {
-                            System.out.println("Too many items selected.");
+                    if(element.getItemName().equals(item)){ //checks if item is in cart
+                        if(element.getNumberInStock() >= quantity) { //checks if user doesnt want to remove too many items
+                            cart.decreaseItemStock(item, quantity);
+
                         }
-                    } else {
-                        System.out.println("Item not available. Please select a different item.");
-                    }
-                }
+                            }
+                            System.out.println("Removed from cart.");
+                        }
                 break;
             case "e":
                 cart.emptyCart();
                 System.out.print("Cart has been emptied.");
                 break;
             case "b":
-                List<Item> itemsB=manager.getItems();
-                List<Item> itemsC=cart.getItemsInCart();
+                List<Item> itemsB = manager.getItems();
+                List<Item> itemsC = cart.getItemsInCart();
                 for(Item element : itemsB){
                     for(Item toBuy : itemsC){
-                        if(element.getItemName().equals(toBuy.getItemName())){
+                        if(element.getItemName().equals(toBuy.getItemName())){ //checks if two items in stock and cart match
                             int num = toBuy.getNumberInStock();
-                            element.removeItem(num);
+                            element.removeItem(num); //items that are bought are getting removed from stock
                         }
                     }
                 }

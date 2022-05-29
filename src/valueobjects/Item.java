@@ -12,8 +12,6 @@ public class Item {
         this.itemCode = itemCode;
         this.numberInStock = numberInStock;
     }
-
-
     public void addItemInStock (int stockIncrease) {
         this.numberInStock = numberInStock + stockIncrease;
     }
@@ -32,7 +30,7 @@ public class Item {
     ///dont we need a IOExeption to say that there ins nothing??
     public String toString() {
         String availability = (numberInStock > 0) ? "available" : "sold out"; //this is to know if we have this item in stock
-        return ("Item Name " + itemName + " / Item code: " + itemCode + " / Availability: " + availability + " /Number in stock: " + numberInStock + "\n");
+        return ("Item Name " + itemName + " / Item code: " + itemCode + " / Availability: " + availability + " /Number in stock: " + numberInStock);
     }
 
     /**

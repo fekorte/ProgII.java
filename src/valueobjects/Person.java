@@ -20,4 +20,6 @@ public abstract class Person {
     }
 
     public abstract boolean getBoolean();
+
+    public abstract String toString();
 }

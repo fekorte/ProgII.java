@@ -15,4 +15,8 @@ public class Client extends Person {
         return client;
     }
     public String getAddress(){return address; }
+
+    public String toString(){
+        return ("Name: " + name + "\n" + "ID number: " + idNumber + "\n" + "Adresse: " + address + "\n");
+    }
 }

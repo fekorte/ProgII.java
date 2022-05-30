@@ -9,6 +9,7 @@ import valueobjects.Receipt;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +21,7 @@ class UI {
     boolean itsAClient;
     private EShopManager manager = new EShopManager();
     private ShopCart cart = new ShopCart();
+    List<String> stockChanges = new ArrayList<>();
 
     public UI() throws IOException {
         in = new BufferedReader(new InputStreamReader(System.in));
@@ -56,7 +58,7 @@ class UI {
         System.out.print("         \n Add new item: 'a' "); //this is made a new product to sell
         System.out.print("         \n Increase stock: 'k' "); // to put more of the same products--thi set the variable int stock in Item --somehow throug the
         System.out.print("         \n Register new employee: 'y' "); //working
-        System.out.print("         \n Show Stock logBook: 'x' "); //Logbook--> all the movements done in stock-->creates a txt file
+        System.out.print("         \n Show stock logBook: 'x' "); //Logbook--> all the movements done in stock-->creates a txt file
         System.out.print("         \n ---------------------");
         System.out.println("       \n  Exit:        'w'");
         System.out.print("> ");
@@ -84,9 +86,9 @@ class UI {
                 String itemName=readInput();
                 System.out.print("Price > ");
                 float price=Float.parseFloat(readInput());
-                System.out.print("Item code");
+                System.out.print("Item code > ");
                 int itemCode=Integer.parseInt(readInput());
-                System.out.print("Number of items");
+                System.out.print("Number of items > ");
                 int numberInStock=Integer.parseInt(readInput());
                 //create de Item object
                 Item itemNew=new Item(itemName, price, itemCode, numberInStock);
@@ -97,6 +99,9 @@ class UI {
                 for(Item element: items){
                     System.out.println(element);
                 }
+                String stockNumber = String.valueOf(itemNew.getNumberInStock());//from here on it is for the point 'x' in menu to make the logbook entry
+                String employee = user.toString();
+                stockChanges.add("\n" + "Added item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + employee + "\n");
             }
             break;
             case "b":
@@ -107,6 +112,10 @@ class UI {
                         if(element.getItemName().equals(toBuy.getItemName())){ //checks if two items in stock and cart match
                             int num = toBuy.getNumberInStock();
                             element.removeItem(num); //items that are bought are getting removed from stock
+                            String itemName = element.getItemName(); //from here on it is for the point 'x' in menu to make the logbook entry
+                            String stockNumber = String.valueOf(num);
+                            String client = user.toString();
+                            stockChanges.add("\n" + "Added item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + client + "\n"); //write information about changes in List
                         }
                     }
                 }
@@ -131,14 +140,19 @@ class UI {
             {
                 System.out.print("Item name > ");
                 String itemName = readInput();
-                System.out.print("Total quantity > ");
+                System.out.print("Quantity > ");
                 quantity = Integer.parseInt(readInput());
                 List<Item> itemsK=manager.getItems();
                 for(Item element : itemsK){
                     if (element.getItemName().equals(itemName)){
-                        element.setNumberInStock(quantity);
+                        element.addItemInStock(quantity);
+                        String addedToStock = String.valueOf(quantity); //from here on it is for the point 'x' in menu to make the logbook entry
+                        String stockNumber = String.valueOf(element.getNumberInStock());
+                        String employee = user.toString();
+                        stockChanges.add("\n" + "Item: " + itemName + "\n" + "Quantity added: " + addedToStock + "\n" + "Total quantity: " + stockNumber + "\n" + "Name of employee: " + employee + "\n");
                     }
                 }
+
             }
             break;
             case "l":
@@ -222,7 +236,6 @@ class UI {
                 System.out.print("Quantity >");
                 quantity = Integer.parseInt(readInput());
                 List<Item> itemsV = cart.getItemsInCart();
-                List<Item> itemsY = manager.getItems();
                 for(Item element : itemsV){
                     if(element.getItemName().equals(item)){ //checks if item is in cart
                         if(element.getNumberInStock() >= quantity) { //checks if user doesnt want to remove too many items
@@ -236,6 +249,9 @@ class UI {
                 loggedIn = false;
                 break;
             case "x":
+                for(String stockEntry : stockChanges){
+                    System.out.println(stockEntry);
+                }
                 break;
             case "y":
                 System.out.print ("Username > ");

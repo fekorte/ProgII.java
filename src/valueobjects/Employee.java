@@ -9,5 +9,8 @@ public class  Employee extends Person {
     public boolean getBoolean(){
         return client;
     }
+    public String toString(){
+        return ("Name: " + name + "\n" + "ID number: " + idNumber + "\n");
+    }
 }
 

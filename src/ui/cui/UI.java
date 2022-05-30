@@ -58,7 +58,7 @@ class UI {
         System.out.print("         \n Add new item: 'a' "); //this is made a new product to sell
         System.out.print("         \n Increase stock: 'k' "); // to put more of the same products--thi set the variable int stock in Item --somehow throug the
         System.out.print("         \n Register new employee: 'y' "); //working
-        System.out.print("         \n Show stock logBook: 'x' "); //Logbook--> all the movements done in stock-->creates a txt file
+        System.out.print("         \n Show stock logbook: 'x' "); //Logbook--> all the movements done in stock-->creates a txt file
         System.out.print("         \n ---------------------");
         System.out.println("       \n  Exit:        'w'");
         System.out.print("> ");
@@ -101,7 +101,7 @@ class UI {
                 }
                 String stockNumber = String.valueOf(itemNew.getNumberInStock());//from here on it is for the point 'x' in menu to make the logbook entry
                 String employee = user.toString();
-                stockChanges.add("\n" + "Added item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + employee + "\n");
+                stockChanges.add("\n" + "New item added" + "\n" + "Added item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + employee + "\n");
             }
             break;
             case "b":
@@ -115,7 +115,7 @@ class UI {
                             String itemName = element.getItemName(); //from here on it is for the point 'x' in menu to make the logbook entry
                             String stockNumber = String.valueOf(num);
                             String client = user.toString();
-                            stockChanges.add("\n" + "Added item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + client + "\n"); //write information about changes in List
+                            stockChanges.add("\n" + "Items bought" + "\n" + "Bought item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of client: " + client + "\n"); //write information about changes in List
                         }
                     }
                 }
@@ -149,7 +149,7 @@ class UI {
                         String addedToStock = String.valueOf(quantity); //from here on it is for the point 'x' in menu to make the logbook entry
                         String stockNumber = String.valueOf(element.getNumberInStock());
                         String employee = user.toString();
-                        stockChanges.add("\n" + "Item: " + itemName + "\n" + "Quantity added: " + addedToStock + "\n" + "Total quantity: " + stockNumber + "\n" + "Name of employee: " + employee + "\n");
+                        stockChanges.add("\n" + "Stock increased" + "\n" + "Item: " + itemName + "\n" + "Quantity added: " + addedToStock + "\n" + "Total quantity: " + stockNumber + "\n" + "Name of employee: " + employee + "\n");
                     }
                 }
 

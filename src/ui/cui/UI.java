@@ -76,6 +76,71 @@ class UI {
         boolean inCart = false;
 
         switch (line) {
+            case "a":{
+                List<Item> items=manager.getItems();
+                //input the ItemName
+                //input the Variable
+                System.out.print("Item Name > ");
+                String itemName=readInput();
+                System.out.print("Price > ");
+                float price=Float.parseFloat(readInput());
+                System.out.print("Item code");
+                int itemCode=Integer.parseInt(readInput());
+                System.out.print("Number of items");
+                int numberInStock=Integer.parseInt(readInput());
+                //create de Item object
+                Item itemNew=new Item(itemName, price, itemCode, numberInStock);
+                //add new item in the list
+                items.add(itemNew);
+                //Organizing and printing the new list
+                Collections.sort(items, Comparator.comparing(Item::getItemName, String.CASE_INSENSITIVE_ORDER));
+                for(Item element: items){
+                    System.out.println(element);
+                }
+            }
+            break;
+            case "b":
+                List<Item> itemsB = manager.getItems();//all the item in stock
+                List<Item> itemsC = cart.getItemsInCart();//items in the cart
+                for(Item element : itemsB){
+                    for(Item toBuy : itemsC){
+                        if(element.getItemName().equals(toBuy.getItemName())){ //checks if two items in stock and cart match
+                            int num = toBuy.getNumberInStock();
+                            element.removeItem(num); //items that are bought are getting removed from stock
+                        }
+                    }
+                }
+                Receipt receipt = cart.buy(user, cart);
+                System.out.println(receipt);
+                cart.emptyCart();
+                break;
+            case "e":
+                cart.emptyCart();
+                System.out.print("Cart has been emptied.");
+                break;
+            case "i": {
+                List<Item> itemsI = manager.getItems();
+                System.out.println(itemsI.get(0).getItemName());
+                Collections.sort(itemsI, Comparator.comparing(Item::getItemName, String.CASE_INSENSITIVE_ORDER));
+                for (Item element : itemsI) {
+                    System.out.println(element);
+                }
+            }
+            break;
+            case "k"://Increase stock
+            {
+                System.out.print("Item name > ");
+                String itemName = readInput();
+                System.out.print("Total quantity > ");
+                quantity = Integer.parseInt(readInput());
+                List<Item> itemsK=manager.getItems();
+                for(Item element : itemsK){
+                    if (element.getItemName().equals(itemName)){
+                        element.setNumberInStock(quantity);
+                    }
+                }
+            }
+            break;
             case "l":
                 System.out.print("Username > ");
                 userName = readInput();
@@ -91,29 +156,10 @@ class UI {
                         itsAClient = false;
                     }
                 } else {
-                        System.out.println("Login failed");
-                        loggedIn = false;
-                    }
-                break;
-            case "r":
-                System.out.print("Username > ");
-                userName = readInput();
-                System.out.print("Password > ");
-                password = readInput();
-                System.out.print("Address > ");
-                address = readInput();
-                manager.registerClient(userName, password, address);
-                break;
-            case "i": {
-                List<Item> itemsI = manager.getItems();
-                System.out.println(itemsI.get(0).getItemName());
-
-                Collections.sort(itemsI, Comparator.comparing(Item::getItemName, String.CASE_INSENSITIVE_ORDER));
-                for (Item element : itemsI) {
-                    System.out.println(element);
+                    System.out.println("Login failed");
+                    loggedIn = false;
                 }
-            }
-            break;
+                break;
             case "m":
                 List<Item> itemsM = cart.getItemsInCart();
                 for(Item element : itemsM){
@@ -129,7 +175,15 @@ class UI {
                 }
             }
             break;
-
+            case "r":
+                System.out.print("Username > ");
+                userName = readInput();
+                System.out.print("Password > ");
+                password = readInput();
+                System.out.print("Address > ");
+                address = readInput();
+                manager.registerClient(userName, password, address);
+                break;
             case "s":
                 System.out.print("Item name > ");
                 item = readInput();
@@ -140,27 +194,27 @@ class UI {
                 for(Item element : itemsS){
                     if(element.getItemName().equals(item)){//checks if element is in stock
                         if (element.getNumberInStock() >= quantity) {//checks if user didnt select more items than available in stock
-                                for(Item article : itemsL){
-                                    if(article.getItemName().equals(item)){//checks if item is already in cart
-                                        if(element.getNumberInStock() >= article.getNumberInStock()) { //number of items in cart cant be higher than in stock
-                                            cart.increaseItemStock(item, quantity);
-                                            System.out.println("Added to cart");
-                                            inCart = true;//to save the fact that the item is already in cart
-                                        }
+                            for(Item article : itemsL){
+                                if(article.getItemName().equals(item)){//checks if item is already in cart
+                                    if(element.getNumberInStock() >= article.getNumberInStock()) { //number of items in cart cant be higher than in stock
+                                        cart.increaseItemStock(item, quantity);
+                                        System.out.println("Added to cart");
+                                        inCart = true;//to save the fact that the item is already in cart
                                     }
                                 }
-                                if(!inCart){ //if item was not already in cart
-                                    float price = element.getPrice();
-                                    int itemCode = element.getItemCode();
-                                    Item cartItem = new Item(item, price, itemCode, quantity);//creates new item
-                                    cart.putItemsInCart(cartItem);
-                                    System.out.println("Added to cart");
-                                } else {
-                                    inCart = false;
-                                }
+                            }
+                            if(!inCart){ //if item was not already in cart
+                                float price = element.getPrice();
+                                int itemCode = element.getItemCode();
+                                Item cartItem = new Item(item, price, itemCode, quantity);//creates new item
+                                cart.putItemsInCart(cartItem);
+                                System.out.println("Added to cart");
+                            } else {
+                                inCart = false;
                             }
                         }
                     }
+                }
                 break;
             case "v":
                 System.out.print("Item name > ");
@@ -173,69 +227,15 @@ class UI {
                     if(element.getItemName().equals(item)){ //checks if item is in cart
                         if(element.getNumberInStock() >= quantity) { //checks if user doesnt want to remove too many items
                             cart.decreaseItemStock(item, quantity);
-
-                        }
-                            }
-                            System.out.println("Removed from cart.");
-                        }
-                break;
-            case "e":
-                cart.emptyCart();
-                System.out.print("Cart has been emptied.");
-                break;
-            case "b":
-                List<Item> itemsB = manager.getItems();//all the item in stock
-                List<Item> itemsC = cart.getItemsInCart();//items in the cart
-                for(Item element : itemsB){
-                    for(Item toBuy : itemsC){
-                        if(element.getItemName().equals(toBuy.getItemName())){ //checks if two items in stock and cart match
-                            int num = toBuy.getNumberInStock();
-                            element.removeItem(num); //items that are bought are getting removed from stock
                         }
                     }
+                    System.out.println("Removed from cart.");
                 }
-
-                Receipt receipt = cart.buy(user, cart);
-                System.out.println(receipt);
-                cart.emptyCart();
                 break;
-            case "a":{
-                List<Item> items=manager.getItems();
-                //input the ItemName
-                //input the Variable
-                System.out.print("Item Name > ");
-                String itemName=readInput();
-                System.out.print("Price > ");
-                float price=Float.parseFloat(readInput());
-                System.out.print("Item code");
-                int itemCode=Integer.parseInt(readInput());
-                System.out.print("Number of items");
-                int numberInStock=Integer.parseInt(readInput());
-                //create de Item object
-                Item itemNew=new Item(itemName, price, itemCode, numberInStock);
-
-                //add new item in the list
-                items.add(itemNew);
-                //Organizing and printing the new list
-                Collections.sort(items, Comparator.comparing(Item::getItemName, String.CASE_INSENSITIVE_ORDER));
-                for(Item element: items){
-                    System.out.println(element);
-                }
-            }
+            case "w":
+                loggedIn = false;
                 break;
-            case "k"://Increase stock
-            {
-                System.out.print("Item name > ");
-                String itemName = readInput();
-                System.out.print("Total quantity > ");
-                quantity = Integer.parseInt(readInput());
-                List<Item> itemsK=manager.getItems();
-                for(Item element : itemsK){
-                    if (element.getItemName().equals(itemName)){
-                        element.setNumberInStock(quantity);
-                    }
-                }
-            }
+            case "x":
                 break;
             case "y":
                 System.out.print ("Username > ");
@@ -243,11 +243,6 @@ class UI {
                 System.out.print ("Password > ");
                 password = readInput ();
                 manager.registerEmployee (userName, password);
-                break;
-            case "x":
-                break;
-            case "w":
-                loggedIn = false;
                 break;
             default:
                 break;

@@ -78,7 +78,7 @@ class UI {
         boolean inCart = false;
 
         switch (line) {
-            case "a":{
+            case "a":{ //Add new item
                 List<Item> items=manager.getItems();
                 //input the ItemName
                 //input the Variable
@@ -104,7 +104,7 @@ class UI {
                 stockChanges.add("\n" + "New item added" + "\n" + "Added item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + employee + "\n");
             }
             break;
-            case "b":
+            case "b": //Buy selected items
                 List<Item> itemsB = manager.getItems();//all the item in stock
                 List<Item> itemsC = cart.getItemsInCart();//items in the cart
                 for(Item element : itemsB){

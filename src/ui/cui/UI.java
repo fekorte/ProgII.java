@@ -9,25 +9,30 @@ import valueobjects.Receipt;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
-class UI {
+class UI{
     private BufferedReader in;
     private Person user;
     boolean loggedIn;
     boolean itsAClient;
-    private EShopManager manager = new EShopManager();
-    private ShopCart cart = new ShopCart();
-    List<String> stockChanges = new ArrayList<>();
+    private EShopManager manager=new EShopManager();
+    private ShopCart cart=new ShopCart();
+    List<String> stockChanges=new ArrayList<>();
 
-    public UI() throws IOException {
-        in = new BufferedReader(new InputStreamReader(System.in));
+    LocalTime time= LocalTime.now();//I looked for a YouTube tutorial...lets see if that works, I'm not sure how to check it haha Natha
+    String date =String.valueOf(LocalDate.now());
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss", Locale.GERMAN);
+    String hour= formatter.format(time);
+
+    public UI() throws IOException{
+        in=new BufferedReader(new InputStreamReader(System.in));
     }
 
-    private void showMenu() {
+    private void showMenu(){
         System.out.print("Commands: \n  Login:  'l'");
         System.out.print("         \n  Register:  'r'");
         System.out.print("         \n  ---------------------");
@@ -36,7 +41,7 @@ class UI {
         System.out.flush();
     }
 
-    private void showClientMenu() {
+    private void showClientMenu(){
         System.out.print("Commands:\n ---------------------");
         System.out.print("         \n Show items (a-z): 'i' ");
         System.out.print("         \n Show items (item number) : 'n' ");
@@ -51,7 +56,7 @@ class UI {
         System.out.flush();
     }
 
-    private void showEmployeeMenu() {
+    private void showEmployeeMenu(){
         System.out.print("Commands:\n ---------------------");
         System.out.print("         \n Show items (a-z item name): 'i' ");
         System.out.print("         \n Show items (item code) : 'n' ");
@@ -65,19 +70,19 @@ class UI {
         System.out.flush();
     }
 
-    private String readInput() throws IOException {
+    private String readInput() throws IOException{
         return in.readLine();
     }
 
-    private void processInput (String line) throws IOException {
+    private void processInput(String line) throws IOException{
         String userName;
         String password;
         String address;
         String item;
         int quantity;
-        boolean inCart = false;
+        boolean inCart=false;
 
-        switch (line) {
+        switch(line){
             case "a":{ //Add new item
                 List<Item> items=manager.getItems();
                 //input the ItemName
@@ -99,27 +104,28 @@ class UI {
                 for(Item element: items){
                     System.out.println(element);
                 }
-                String stockNumber = String.valueOf(itemNew.getNumberInStock());//from here on it is for the point 'x' in menu to make the logbook entry
-                String employee = user.toString();
-                stockChanges.add("\n" + "New item added" + "\n" + "Added item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + employee + "\n");
+                String stockNumber=String.valueOf(itemNew.getNumberInStock());//from here on it is for the point 'x' in menu to make the logbook entry
+                //String employee=user.toString();
+
+                stockChanges.add("\n" + "New item added" + "\n" + "Added item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + user.getName()+ "\n" + "Time of entry: " + " " + date + " " + hour + "\n" );
             }
             break;
             case "b": //Buy selected items
-                List<Item> itemsB = manager.getItems();//all the item in stock
-                List<Item> itemsC = cart.getItemsInCart();//items in the cart
-                for(Item element : itemsB){
-                    for(Item toBuy : itemsC){
+                List<Item> itemsB=manager.getItems();//all the item in stock
+                List<Item> itemsC=cart.getItemsInCart();//items in the cart
+                for(Item element: itemsB){
+                    for(Item toBuy: itemsC){
                         if(element.getItemName().equals(toBuy.getItemName())){ //checks if two items in stock and cart match
-                            int num = toBuy.getNumberInStock();
+                            int num=toBuy.getNumberInStock();
                             element.removeItem(num); //items that are bought are getting removed from stock
-                            String itemName = element.getItemName(); //from here on it is for the point 'x' in menu to make the logbook entry
-                            String stockNumber = String.valueOf(num);
-                            String client = user.toString();
-                            stockChanges.add("\n" + "Items bought" + "\n" + "Bought item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of client: " + client + "\n"); //write information about changes in List
+                            String itemName=element.getItemName(); //from here on it is for the point 'x' in menu to make the logbook entry
+                            String stockNumber=String.valueOf(num);
+                            String client=user.toString();
+                            stockChanges.add("\n" + "Items bought" + "\n" + "Bought item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of client: " + user.getName()+ "\n" + "Time of entry: " + " " + date + " " + hour + "\n" ); //write information about changes in List
                         }
                     }
                 }
-                Receipt receipt = cart.buy(user, cart);
+                Receipt receipt=cart.buy(user, cart);
                 System.out.println(receipt);
                 cart.emptyCart();
                 break;
@@ -127,11 +133,11 @@ class UI {
                 cart.emptyCart();
                 System.out.print("Cart has been emptied.");
                 break;
-            case "i": {
-                List<Item> itemsI = manager.getItems();
+            case "i":{
+                List<Item> itemsI=manager.getItems();
                 System.out.println(itemsI.get(0).getItemName());
                 Collections.sort(itemsI, Comparator.comparing(Item::getItemName, String.CASE_INSENSITIVE_ORDER));
-                for (Item element : itemsI) {
+                for(Item element: itemsI){
                     System.out.println(element);
                 }
             }
@@ -139,17 +145,17 @@ class UI {
             case "k"://Increase stock
             {
                 System.out.print("Item name > ");
-                String itemName = readInput();
+                String itemName=readInput();
                 System.out.print("Quantity > ");
-                quantity = Integer.parseInt(readInput());
+                quantity=Integer.parseInt(readInput());
                 List<Item> itemsK=manager.getItems();
-                for(Item element : itemsK){
-                    if (element.getItemName().equals(itemName)){
+                for(Item element: itemsK){
+                    if(element.getItemName().equals(itemName)){
                         element.addItemInStock(quantity);
-                        String addedToStock = String.valueOf(quantity); //from here on it is for the point 'x' in menu to make the logbook entry
-                        String stockNumber = String.valueOf(element.getNumberInStock());
-                        String employee = user.toString();
-                        stockChanges.add("\n" + "Stock increased" + "\n" + "Item: " + itemName + "\n" + "Quantity added: " + addedToStock + "\n" + "Total quantity: " + stockNumber + "\n" + "Name of employee: " + employee + "\n");
+                        String addedToStock=String.valueOf(quantity); //from here on it is for the point 'x' in menu to make the logbook entry
+                        String stockNumber=String.valueOf(element.getNumberInStock());
+                        String employee=user.toString();
+                        stockChanges.add("\n" + "Stock increased" + "\n" + "Item: " + itemName + "\n" + "Quantity added: " + addedToStock + "\n" + "Total quantity: " + stockNumber + "\n" + "Name of employee: " + user.getName()+ "\n" + "Time of entry: " + " " + date + " " + hour + "\n" );
                     }
                 }
 
@@ -157,74 +163,74 @@ class UI {
             break;
             case "l":
                 System.out.print("Username > ");
-                userName = readInput();
+                userName=readInput();
                 System.out.print("Password > ");
-                password = readInput();
-                user = manager.login(userName, password);
-                if (user != null) {
+                password=readInput();
+                this.user=manager.login(userName, password);
+                if(user != null){
                     System.out.println("Login successful");
-                    loggedIn = true;
-                    if (manager.selectMenu(user)) {
-                        itsAClient = true;
+                    loggedIn=true;
+                    if(manager.selectMenu(user)){
+                        itsAClient=true;
                     } else {
-                        itsAClient = false;
+                        itsAClient=false;
                     }
                 } else {
                     System.out.println("Login failed");
-                    loggedIn = false;
+                    loggedIn=false;
                 }
                 break;
             case "m":
-                List<Item> itemsM = cart.getItemsInCart();
-                for(Item element : itemsM){
+                List<Item> itemsM=cart.getItemsInCart();
+                for(Item element: itemsM){
                     System.out.println(element);
                 }
                 break;
             case "n": //Show items (item number) : 'n' "
             {
-                List<Item> items = manager.getItems();
+                List<Item> items=manager.getItems();
                 Collections.sort(items, Comparator.comparingInt(Item::getItemCode));
-                for (Item element : items) {
+                for(Item element: items){
                     System.out.println(element);
                 }
             }
             break;
             case "r":
                 System.out.print("Username > ");
-                userName = readInput();
+                userName=readInput();
                 System.out.print("Password > ");
-                password = readInput();
+                password=readInput();
                 System.out.print("Address > ");
-                address = readInput();
+                address=readInput();
                 manager.registerClient(userName, password, address);
                 break;
             case "s":
                 System.out.print("Item name > ");
-                item = readInput();
+                item=readInput();
                 System.out.print("Quantity >");
-                quantity = Integer.parseInt(readInput());
-                List<Item> itemsS = manager.getItems();
-                List<Item> itemsL = cart.getItemsInCart();
-                for(Item element : itemsS){
+                quantity=Integer.parseInt(readInput());
+                List<Item> itemsS=manager.getItems();
+                List<Item> itemsL=cart.getItemsInCart();
+                for(Item element: itemsS){
                     if(element.getItemName().equals(item)){//checks if element is in stock
-                        if (element.getNumberInStock() >= quantity) {//checks if user didnt select more items than available in stock
-                            for(Item article : itemsL){
+                        if(element.getNumberInStock() >= quantity){//checks if user didnt select more items than available in stock
+                            for(Item article: itemsL){
                                 if(article.getItemName().equals(item)){//checks if item is already in cart
-                                    if(element.getNumberInStock() >= article.getNumberInStock()) { //number of items in cart cant be higher than in stock
+                                    if(element.getNumberInStock() >= article.getNumberInStock()){ //number of items in cart cant be higher than in stock
                                         cart.increaseItemStock(item, quantity);
                                         System.out.println("Added to cart");
-                                        inCart = true;//to save the fact that the item is already in cart
+                                        inCart=true;//to save the fact that the item is already in cart
                                     }
                                 }
                             }
                             if(!inCart){ //if item was not already in cart
-                                float price = element.getPrice();
-                                int itemCode = element.getItemCode();
-                                Item cartItem = new Item(item, price, itemCode, quantity);//creates new item
+                                float price=element.getPrice();
+                                int itemCode=element.getItemCode();
+                                Item cartItem=new Item(item, price, itemCode, quantity);//creates new item
                                 cart.putItemsInCart(cartItem);
                                 System.out.println("Added to cart");
                             } else {
-                                inCart = false;
+                                inCart=false;
                             }
                         }
                     }
@@ -232,13 +238,13 @@ class UI {
                 break;
             case "v":
                 System.out.print("Item name > ");
-                item = readInput();
+                item=readInput();
                 System.out.print("Quantity >");
-                quantity = Integer.parseInt(readInput());
-                List<Item> itemsV = cart.getItemsInCart();
-                for(Item element : itemsV){
+                quantity=Integer.parseInt(readInput());
+                List<Item> itemsV=cart.getItemsInCart();
+                for(Item element: itemsV){
                     if(element.getItemName().equals(item)){ //checks if item is in cart
-                        if(element.getNumberInStock() >= quantity) { //checks if user doesnt want to remove too many items
+                        if(element.getNumberInStock() >= quantity){ //checks if user doesnt want to remove too many items
                             cart.decreaseItemStock(item, quantity);
                         }
                     }
@@ -246,28 +252,28 @@ class UI {
                 }
                 break;
             case "w":
-                loggedIn = false;
+                loggedIn=false;
                 break;
             case "x":
-                for(String stockEntry : stockChanges){
+                for(String stockEntry: stockChanges){
                     System.out.println(stockEntry);
                 }
                 break;
             case "y":
-                System.out.print ("Username > ");
-                userName = readInput ();
-                System.out.print ("Password > ");
-                password = readInput ();
-                manager.registerEmployee (userName, password);
+                System.out.print("Username > ");
+                userName=readInput();
+                System.out.print("Password > ");
+                password=readInput();
+                manager.registerEmployee(userName, password);
                 break;
             default:
                 break;
         }
     }
 
-    public void run() {
-        String input = "";
-        do {
+    public void run(){
+        String input="";
+        do{
             if(loggedIn){
                 if(itsAClient){
                     showClientMenu();
@@ -277,18 +283,18 @@ class UI {
             } else {
                 showMenu();
             }
-            try {
-                input = readInput();
+            try{
+                input=readInput();
                 processInput(input);
-            } catch (IOException e) {
+            } catch(IOException e){
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        } while (!input.equals("q"));
+        } while(!input.equals("q"));
     }
 
-    public static void main(String[] args) throws IOException {
-        UI cui = new UI();
+    public static void main(String[] args) throws IOException{
+        UI cui=new UI();
         cui.run();
     }
 

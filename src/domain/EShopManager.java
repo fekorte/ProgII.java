@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EShopManager {
     List<Person> users = new ArrayList<>();
-    List<Person> loggedInUsers;
+    List<Person> loggedInUsers;//this is to implement in the future but not now
     private Stock stock = new Stock();
 
 
@@ -27,6 +27,7 @@ public class EShopManager {
         registerEmployee("Hans", "abc");
         registerClient("Natha", "123", "ZMT" );
         registerEmployee("Felina", "123");
+        registerClient("Sedefnur", "0426", "gröp");
     }
 
     public Person login(String userName, String password) {

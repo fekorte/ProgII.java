@@ -23,7 +23,7 @@ class UI{
     private ShopCart cart=new ShopCart();
     List<String> stockChanges=new ArrayList<>();
 
-    LocalTime time= LocalTime.now();//I looked for a YouTube tutorial...lets see if that works, I'm not sure how to check it haha Natha
+    LocalTime time= LocalTime.now();
     String date =String.valueOf(LocalDate.now());
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss", Locale.GERMAN);
     String hour= formatter.format(time);
@@ -107,7 +107,7 @@ class UI{
                 String stockNumber=String.valueOf(itemNew.getNumberInStock());//from here on it is for the point 'x' in menu to make the logbook entry
                 //String employee=user.toString();
 
-                stockChanges.add("\n" + "New item added" + "\n" + "Added item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + user.getName()+ "\n" + "Time of entry: " + " " + date + " " + hour + "\n" );
+                stockChanges.add("\n" + "New item added" + "\n" + "Added item: " + itemName +"\n" + "Price: " + price + "\n" + "Quantity: " + stockNumber + "\n" + "Name of employee: " + user.getName()+ "\n" + "Time of entry: " + " " + date + " " + hour + "\n" );
             }
             break;
             case "b": //Buy selected items
@@ -120,7 +120,6 @@ class UI{
                             element.removeItem(num); //items that are bought are getting removed from stock
                             String itemName=element.getItemName(); //from here on it is for the point 'x' in menu to make the logbook entry
                             String stockNumber=String.valueOf(num);
-                            String client=user.toString();
                             stockChanges.add("\n" + "Items bought" + "\n" + "Bought item: " + itemName + "\n" + "Quantity: " + stockNumber + "\n" + "Name of client: " + user.getName()+ "\n" + "Time of entry: " + " " + date + " " + hour + "\n" ); //write information about changes in List
                         }
                     }
@@ -134,8 +133,8 @@ class UI{
                 System.out.print("Cart has been emptied.");
                 break;
             case "i":{
-                List<Item> itemsI=manager.getItems();
-                System.out.println(itemsI.get(0).getItemName());
+                List<Item> itemsI= manager.getItems();
+                System.out.println(itemsI.get(0).getItemName()); //ask about null in get
                 Collections.sort(itemsI, Comparator.comparing(Item::getItemName, String.CASE_INSENSITIVE_ORDER));
                 for(Item element: itemsI){
                     System.out.println(element);
@@ -154,7 +153,6 @@ class UI{
                         element.addItemInStock(quantity);
                         String addedToStock=String.valueOf(quantity); //from here on it is for the point 'x' in menu to make the logbook entry
                         String stockNumber=String.valueOf(element.getNumberInStock());
-                        String employee=user.toString();
                         stockChanges.add("\n" + "Stock increased" + "\n" + "Item: " + itemName + "\n" + "Quantity added: " + addedToStock + "\n" + "Total quantity: " + stockNumber + "\n" + "Name of employee: " + user.getName()+ "\n" + "Time of entry: " + " " + date + " " + hour + "\n" );
                     }
                 }
@@ -216,10 +214,11 @@ class UI{
                         if(element.getNumberInStock() >= quantity){//checks if user didnt select more items than available in stock
                             for(Item article: itemsL){
                                 if(article.getItemName().equals(item)){//checks if item is already in cart
-                                    if(element.getNumberInStock() >= article.getNumberInStock()){ //number of items in cart cant be higher than in stock
+                                    inCart=true;//to save the fact that the item is already in cart
+                                    if(element.getNumberInStock() >= article.getNumberInStock()+quantity){ //number of items in cart cant be higher than in stock
                                         cart.increaseItemStock(item, quantity);
                                         System.out.println("Added to cart");
-                                        inCart=true;//to save the fact that the item is already in cart
+
                                     }
                                 }
                             }
@@ -253,6 +252,7 @@ class UI{
                 break;
             case "w":
                 loggedIn=false;
+                cart.emptyCart();
                 break;
             case "x":
                 for(String stockEntry: stockChanges){

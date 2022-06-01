@@ -13,7 +13,7 @@ package ui.cui;
             e.printStackTrace();
         }
 
-        layoutFuegeSuchleisteHinzu();
+        layoutAddSearchBar();
         layoutHinzufuegenleisteHinzu();
         layoutFuegeErgebnislisteHinzu();
 

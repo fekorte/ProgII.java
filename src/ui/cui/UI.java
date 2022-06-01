@@ -256,7 +256,9 @@ class UI{
                 break;
             case "x":
                 for(String stockEntry: stockChanges){
+                    System.out.println("------------------------");
                     System.out.println(stockEntry);
+                    System.out.println("------------------------");
                 }
                 break;
             case "y":
